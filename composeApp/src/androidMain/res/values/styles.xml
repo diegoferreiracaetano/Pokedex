@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Pokedex" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Pokedex.Launcher" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+
+        <!-- Cor de fundo igual à usada no Compose -->
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+
+        <!-- Ícone estático do splash -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+
+        <!-- Se quiser, pode definir o background do ícone -->
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+
+        <!-- Após o splash, usa o tema normal -->
+        <item name="postSplashScreenTheme">@style/Theme.Pokedex</item>
+
+    </style>
+
+</resources>

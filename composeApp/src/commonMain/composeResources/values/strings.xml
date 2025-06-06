@@ -1,0 +1,27 @@
+<resources>
+    <string name="action_back">Voltar</string>
+
+    <string name="title_email">E-mail</string>
+    <string name="title_password">Senha</string>
+
+    //onboarding
+    <string name="skip">Pular  -></string>
+    <string name="onboarding_image_content_description">login image</string>
+    <string name="onboarding_title">Está pronto para essa aventura?</string>
+    <string name="onboarding_subtitle">Basta criar uma conta e começar a explorar o mundo dos Pokémon hoje!</string>
+    <string name="create_account">Criar Conta</string>
+    <string name="already_have_account">Já tenho uma conta</string>
+
+    //login
+    <string name="signup_toolbar_title">Criar conta</string>
+    <string name="signup_title">Falta pouco para explorar esse mundo!</string>
+    <string name="login_toolbar_title">Entrar</string>
+    <string name="login_title">Que bom te ver aqui novamente!</string>
+
+    <string name="auth_description">Como deseja se conectar?</string>
+    <string name="auth_continue_with_apple">Continuar com a Apple</string>
+    <string name="auth_continue_with_google">Continuar com o Google</string>
+    <string name="auth_continue_with_email">Continuar com um e-mail</string>
+
+
+</resources>
