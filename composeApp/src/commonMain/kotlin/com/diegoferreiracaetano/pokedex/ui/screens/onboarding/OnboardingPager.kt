@@ -43,7 +43,6 @@ fun OnboardingPager(
 
     Column(
         modifier = modifier
-            .padding(bottom = 16.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

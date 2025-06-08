@@ -4,32 +4,25 @@ package com.diegoferreiracaetano.pokedex.ui.screens.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.StringAnnotation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
 import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
-import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.*
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.SIGN_UP
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -37,8 +30,6 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
-import pokedex.composeapp.generated.resources.action_back
-import pokedex.composeapp.generated.resources.already_have_account
 import pokedex.composeapp.generated.resources.apple
 import pokedex.composeapp.generated.resources.auth_continue_with_apple
 import pokedex.composeapp.generated.resources.auth_continue_with_email
@@ -46,9 +37,7 @@ import pokedex.composeapp.generated.resources.auth_continue_with_google
 import pokedex.composeapp.generated.resources.auth_description
 import pokedex.composeapp.generated.resources.character_lusamine
 import pokedex.composeapp.generated.resources.character_red
-import pokedex.composeapp.generated.resources.create_account
 import pokedex.composeapp.generated.resources.google
-import pokedex.composeapp.generated.resources.image3
 import pokedex.composeapp.generated.resources.login_title
 import pokedex.composeapp.generated.resources.login_toolbar_title
 import pokedex.composeapp.generated.resources.signup_title
@@ -91,39 +80,25 @@ private object AuthScreenDataProvider {
 @Composable
 fun OnboardingFinishScreen(
     type: AuthScreenType = LOGIN,
-    onCreateAccount: () -> Unit,
-    onLogin: () -> Unit,
+    onBack: () -> Unit,
+    onAccountCreated: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val screenData = AuthScreenDataProvider(type)
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        stringResource(screenData.toolbarTitle),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(Res.string.action_back)
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-            )
-        },
-    ) { innerPadding ->
-        LoginContent(screenData,{}, {}, Modifier.padding(innerPadding))
+    AppTopBar(
+        stringResource(screenData.toolbarTitle),
+        onBack,
+        modifier,
+    ) { modifier ->
+        LoginContent(
+            screenData,
+            onAccountCreated, // change to create account
+            {},
+            {},
+            modifier
+        )
     }
 }
 
@@ -131,23 +106,29 @@ fun OnboardingFinishScreen(
 fun LoginContent(
     authScreenData: AuthScreenData,
     onCreateAccount: () -> Unit,
-    onLogin: () -> Unit,
+    onCreateAccountApple: () -> Unit,
+    onCreateAccountGoogle: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.weight(0.1f))
+
+        Spacer(modifier = Modifier.weight(0.3f))
 
         Image(
             painter = painterResource(authScreenData.imageRes),
             contentDescription = stringResource(authScreenData.title),
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.Crop
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .aspectRatio(1f),
+            contentScale = ContentScale.Fit
         )
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.weight(0.7f))
 
         Text(
             text = stringResource(Res.string.login_title),
@@ -163,13 +144,13 @@ fun LoginContent(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(16.dp))
 
         AppButton(
             image = Res.drawable.apple,
             text = stringResource(Res.string.auth_continue_with_apple),
-            type = ButtonType.SECONDARY,
-            onClick = onLogin
+            type = ButtonType.TERTIARY,
+            onClick = onCreateAccountApple
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -177,8 +158,8 @@ fun LoginContent(
         AppButton(
             image = Res.drawable.google,
             text = stringResource(Res.string.auth_continue_with_google),
-            type = ButtonType.SECONDARY,
-            onClick = onLogin
+            type = ButtonType.TERTIARY,
+            onClick = onCreateAccountGoogle
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -196,6 +177,6 @@ fun LoginContent(
 @Composable
 fun OnboardingFinishScreenPreview() {
     PokedexTheme {
-        OnboardingFinishScreen(LOGIN,{}, {})
+        OnboardingFinishScreen(SIGN_UP,{}, {})
     }
 }

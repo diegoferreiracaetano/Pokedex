@@ -6,10 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
 import com.diegoferreiracaetano.pokedex.ui.screens.HomeScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingFinishScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingScreen
 
@@ -35,10 +39,28 @@ fun AppNavGraph(
 
         composable( OnboardingFinish.route) {
             OnboardingFinishScreen(
-                onCreateAccount = {},
+                onCreateAccount = {
+                    navController.navigate(CreateAccount.route)
+                },
                 onLogin = {},
                 onSkip = {},
                 modifier = modifier
+            )
+        }
+
+        composable(CreateAccount.route) { backStackEntry ->
+            val step = backStackEntry.readEnumOrDefault(STEP_ARG, CreateAccountStepType.entries.first())
+            CreateAccountScreen(
+                step = step,
+                onNext = { nextStep ->
+                    navController.navigate(CreateAccount.routeWithStep(nextStep))
+                },
+                onFinish = {
+                    navController.navigateClearBackStackTo(Home.route)
+                },
+                onBack = {
+                    navController.popBackStack()
+                }
             )
         }
     }

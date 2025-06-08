@@ -45,10 +45,12 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta01")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta02")
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
+            implementation("io.insert-koin:koin-core:3.5.3")
+            implementation("io.insert-koin:koin-compose:1.1.5")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

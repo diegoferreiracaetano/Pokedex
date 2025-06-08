@@ -69,7 +69,6 @@ fun PokedexTheme(
         shapes = Shapes
     ) {
         Surface(
-            modifier = Modifier.fillMaxSize(),
             color = colorScheme.surface
         ) {
             content()

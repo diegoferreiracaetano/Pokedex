@@ -25,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.diegoferreiracaetano.pokedex.ui.theme.Black500
+import com.diegoferreiracaetano.pokedex.ui.theme.Black800
 import com.diegoferreiracaetano.pokedex.ui.theme.GrayDisabledBackground
 import com.diegoferreiracaetano.pokedex.ui.theme.GrayDisabledText
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
@@ -39,7 +41,8 @@ import pokedex.composeapp.generated.resources.google
 
 enum class ButtonType {
     PRIMARY,
-    SECONDARY
+    SECONDARY,
+    TERTIARY
 }
 
 @Composable
@@ -51,43 +54,89 @@ fun AppButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    val shape = Shapes.large
-    val height = 56.dp
 
     when (type) {
-        ButtonType.PRIMARY -> Button(
-            onClick = onClick,
-            shape = shape,
-            enabled = enabled,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = White,
-                disabledContainerColor = GrayDisabledBackground,
-                disabledContentColor = GrayDisabledText
-            ),
-            modifier = modifier
-                .fillMaxWidth()
-                .height(height)
-        ) {
-            AppButtonContent(text, image)
-        }
+        ButtonType.PRIMARY -> AppButonPrimary(text, onClick, image, modifier, enabled)
+        ButtonType.SECONDARY -> AppButonSecondary(text, onClick, image, modifier, enabled)
+        ButtonType.TERTIARY -> AppButonTertiary(text, onClick, image, modifier, enabled)
+    }
+}
 
-        ButtonType.SECONDARY -> OutlinedButton(
-            onClick = onClick,
-            shape = shape,
-            enabled = enabled,
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary,
-                disabledContentColor = GrayDisabledText
-            ),
-            modifier = modifier
-                .fillMaxWidth()
-                .height(height)
+@Composable
+fun AppButonPrimary(
+    text: String,
+    onClick: () -> Unit,
+    image: DrawableResource? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        shape = Shapes.large,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = White,
+            disabledContainerColor = GrayDisabledBackground,
+            disabledContentColor = GrayDisabledText
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
+        AppButtonContent(text, image)
+    }
+}
 
-        ) {
-            AppButtonContent(text, image)
-        }
+@Composable
+fun AppButonSecondary(
+    text: String,
+    onClick: () -> Unit,
+    image: DrawableResource? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = Shapes.large,
+        enabled = enabled,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = MaterialTheme.colorScheme.primary,
+            disabledContentColor = GrayDisabledText
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+
+    ) {
+        AppButtonContent(text, image)
+    }
+}
+
+@Composable
+fun AppButonTertiary(
+    text: String,
+    onClick: () -> Unit,
+    image: DrawableResource? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = Shapes.large,
+        enabled = enabled,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = Black800,
+            disabledContentColor = GrayDisabledText
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp)
+
+    ) {
+        AppButtonContent(text, image)
     }
 }
 
@@ -116,6 +165,7 @@ fun AppButtonContent(
         )
     }
 }
+
 
 @Composable
 fun ElementButton(
@@ -170,7 +220,13 @@ fun AppButtonPrimaryPreview() {
             AppButton(
                 text = "Secondary",
                 onClick = {},
-                type = ButtonType.SECONDARY,
+                type = ButtonType.SECONDARY
+            )
+
+            AppButton(
+                text = "Tertiary",
+                onClick = {},
+                type = ButtonType.TERTIARY,
                 image = Res.drawable.google
             )
 
