@@ -89,7 +89,7 @@ private fun LoginScreenContent(
 ) {
 
     if (isLoading) {
-        ScreenLoading(modifier)
+        ScreenLoading(modifier, true)
     }
     else if (user != null) {
         FeedbackScreen(
@@ -137,11 +137,12 @@ private fun LoginScreenContent(
             Column(
                 modifier = padding
                     .fillMaxSize()
+                    .background(colorScheme.surface)
                     .imePadding()
                     .padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.2f))
+                Spacer(modifier = Modifier.weight(0.15f))
 
                 Text(
                     text = stringResource(Res.string.login_screen_title),
@@ -150,7 +151,7 @@ private fun LoginScreenContent(
                 )
                 Text(
                     text = stringResource(Res.string.login_screen_subtitle),
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -161,6 +162,7 @@ private fun LoginScreenContent(
                     placeholder = Res.string.title_email,
                     isError = isEmailError,
                     type = TextFieldType.Email,
+                    supportingText = "Informe um e-mail válido.",
                     modifier = Modifier
                         .focusRequester(focusRequester)
                 )
@@ -173,6 +175,7 @@ private fun LoginScreenContent(
                     placeholder = Res.string.title_password,
                     isError = isPasswordError,
                     type = TextFieldType.Password,
+                    supportingText = "Use uma senha válida.",
                     modifier = Modifier
                 )
 
@@ -194,8 +197,6 @@ private fun LoginScreenContent(
                                 (passwordValue.isNotEmpty() && !isPasswordError),
                     onClick = { onLogin(emailValue, passwordValue) }
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
@@ -204,9 +205,9 @@ private fun LoginScreenContent(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    PokedexTheme {
+    PokedexTheme(true) {
         LoginScreenContent(
-            false,
+            true,
             null,
             null,
             {_, _->},

@@ -25,7 +25,7 @@ fun SplashScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier =
             modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.onSurfaceVariant)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
 
         , contentAlignment = Alignment.Center) {
         val currentOnTimeout by rememberUpdatedState(onTimeout)

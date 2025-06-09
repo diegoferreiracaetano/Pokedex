@@ -12,15 +12,19 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ScreenLoading(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showAnimation: Boolean = false
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.onSurfaceVariant),
+            .background(MaterialTheme.colorScheme.surfaceVariant),
         contentAlignment = Alignment.Center
     ) {
-        AppLoading()
+        if(showAnimation)
+            PokeballLoading()
+        else
+            AppLoading()
     }
 }
 

@@ -140,7 +140,7 @@ fun AppTextFieldPreview() {
                 placeholder = Res.string.title_email,
                 isError = email.contains("cm"),
                 type = TextFieldType.Email,
-                supportingText = "Informe um e-mail corporativo"
+                supportingText = "Informe um e-mail válido."
             )
 
             AppTextField(

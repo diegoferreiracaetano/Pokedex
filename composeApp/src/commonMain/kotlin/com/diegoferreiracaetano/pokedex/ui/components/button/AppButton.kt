@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedButton
@@ -73,6 +74,11 @@ fun AppButonPrimary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 4.dp,
+            pressedElevation = 8.dp,
+            disabledElevation = 0.dp
+        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -99,6 +105,11 @@ fun AppButonSecondary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 4.dp,
+            pressedElevation = 8.dp,
+            disabledElevation = 0.dp
+        ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -127,10 +138,15 @@ fun AppButonTertiary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 4.dp,
+            pressedElevation = 8.dp,
+            disabledElevation = 0.dp
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = White,
-            contentColor = Black800,
+            containerColor = MaterialTheme.colorScheme.onSecondary,
+            contentColor = MaterialTheme.colorScheme.secondary,
             disabledContainerColor = GrayDisabledBackground,
             disabledContentColor = GrayDisabledText
         ),
@@ -184,6 +200,11 @@ fun ElementButton(
     Button(
         onClick = onClick,
         shape = shape,
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 4.dp,
+            pressedElevation = 8.dp,
+            disabledElevation = 0.dp
+        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = background,
             contentColor = textColor,
@@ -202,7 +223,7 @@ fun ElementButton(
 @Preview
 @Composable
 fun AppButtonPrimaryPreview() {
-    PokedexTheme(darkTheme = true) {
+    PokedexTheme(false) {
         Column(
             modifier = Modifier
                 .padding(16.dp),
