@@ -3,7 +3,6 @@ package com.diegoferreiracaetano.pokedex.ui.screens.account
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -20,7 +19,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.*
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.EMAIL
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.NAME
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.PASSWORD
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountValidator
 import com.diegoferreiracaetano.pokedex.domain.user.EmailValidator
 import com.diegoferreiracaetano.pokedex.domain.user.NameValidator

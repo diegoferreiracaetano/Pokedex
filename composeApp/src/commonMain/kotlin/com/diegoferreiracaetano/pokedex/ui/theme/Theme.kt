@@ -1,14 +1,11 @@
 package com.diegoferreiracaetano.pokedex.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.diegoferreiracaetano.pokedex.ui.theme.SuccessDark
 
 val LightColorScheme = lightColorScheme(
     primary = BluePrimary,

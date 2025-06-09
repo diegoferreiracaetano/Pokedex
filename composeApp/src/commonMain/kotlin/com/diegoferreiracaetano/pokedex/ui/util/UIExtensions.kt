@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,7 @@ data class UiState<out T>(
     val error: String? = null
 )
 
+@OptIn(ExperimentalCoroutinesApi::class)
 fun <T, R> Flow<T?>.asUiState(
     scope: CoroutineScope,
     initialState: UiState<R> = UiState(),

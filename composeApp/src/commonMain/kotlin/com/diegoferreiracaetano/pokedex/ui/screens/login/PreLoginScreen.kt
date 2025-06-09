@@ -30,7 +30,6 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
-import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.action_enter
 import pokedex.composeapp.generated.resources.apple
 import pokedex.composeapp.generated.resources.auth_continue_with_apple
