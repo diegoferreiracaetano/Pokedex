@@ -33,6 +33,12 @@ val OnErrorLight = Color.White
 val ErrorDark = Color(0xFFFFB4AB)
 val OnErrorDark = Color(0xFF690003)
 
+val SuccessLight = Color(0xFF4CAF50)
+val OnSuccessLight = Color(0xFFFFFFFF)
+
+val SuccessDark = Color(0xFF81C784)
+val OnSuccessDark = Color(0xFF000000)
+
 
 val White = Color(0xFFFFFFFF)
 val GrayDisabledBackground = Color(0xFFE0E0E0)

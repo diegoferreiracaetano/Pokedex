@@ -8,6 +8,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.diegoferreiracaetano.pokedex.ui.theme.SuccessDark
 
 val LightColorScheme = lightColorScheme(
     primary = BluePrimary,
@@ -28,7 +29,10 @@ val LightColorScheme = lightColorScheme(
     onSurfaceVariant = DarkBackground,
 
     error = ErrorLight,
-    onError = OnErrorLight
+    onError = OnErrorLight,
+
+    tertiary = SuccessLight,
+    onTertiary = OnSuccessLight,
 )
 
 val DarkColorScheme = darkColorScheme(
@@ -42,6 +46,9 @@ val DarkColorScheme = darkColorScheme(
     onSecondary = OnErrorDark,
     secondaryContainer = RedSecondaryContainer,
     onSecondaryContainer = RedOnSecondaryContainer,
+
+    tertiary = SuccessDark,
+    onTertiary = OnSuccessDark,
 
     background = DarkBackground,
     onBackground = DarkOnBackground,

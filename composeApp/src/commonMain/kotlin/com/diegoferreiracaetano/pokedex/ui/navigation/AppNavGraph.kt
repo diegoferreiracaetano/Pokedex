@@ -7,13 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.*
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
 import com.diegoferreiracaetano.pokedex.ui.screens.HomeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.*
+import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.login.PreLoginScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingFinishScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingScreen
 
@@ -40,10 +42,29 @@ fun AppNavGraph(
         composable( OnboardingFinish.route) {
             OnboardingFinishScreen(
                 onCreateAccount = {
-                    navController.navigate(CreateAccount.route)
+                    navController.navigate(PreLogin.routeWithType(SIGN_UP))
                 },
-                onLogin = {},
+                onLogin = {
+                    navController.navigate(PreLogin.routeWithType(LOGIN))
+                },
                 onSkip = {},
+                modifier = modifier
+            )
+        }
+
+        composable(PreLogin.route) { backStackEntry ->
+            val type = backStackEntry.readEnumOrDefault(TYPE_ARG, AuthScreenType.entries.first())
+            PreLoginScreen(
+                type = type,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onAccountCreated = {
+                    when (type) {
+                        SIGN_UP -> navController.navigate(CreateAccount.route)
+                        LOGIN -> navController.navigate(Login.route)
+                    }
+                },
                 modifier = modifier
             )
         }
@@ -55,12 +76,20 @@ fun AppNavGraph(
                 onNext = { nextStep ->
                     navController.navigate(CreateAccount.routeWithStep(nextStep))
                 },
-                onFinish = {
-                    navController.navigateClearBackStackTo(Home.route)
+                onFinish = { navController.navigateClearBackStackTo(Home.route) },
+                onBack = { navController.popBackStack() },
+                modifier = modifier
+            )
+        }
+
+        composable(Login.route) {
+            LoginScreen(
+                onFinish = { navController.navigateClearBackStackTo(Home.route) },
+                onBack = { navController.popBackStack() },
+                onForgotPassword = {
+
                 },
-                onBack = {
-                    navController.popBackStack()
-                }
+                modifier = modifier
             )
         }
     }

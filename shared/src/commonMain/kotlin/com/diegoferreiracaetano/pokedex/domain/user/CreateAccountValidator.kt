@@ -20,7 +20,7 @@ object EmailValidator : CreateAccountValidator {
 
 object PasswordValidator : CreateAccountValidator {
     override fun isValid(value: String): Boolean {
-        return value.length >= 8
+        return value.length >= 5
     }
 }
 

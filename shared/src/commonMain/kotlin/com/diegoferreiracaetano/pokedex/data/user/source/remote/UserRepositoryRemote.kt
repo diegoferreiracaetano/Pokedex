@@ -14,8 +14,20 @@ class UserRepositoryRemote(
         emit(dataSource.loadUser().toDomainList())
     }
 
-
     override suspend fun save(user: User) {
         dataSource.saveUser(user.toExternal())
+    }
+
+    override fun findByUser(
+        email: String,
+        password: String
+    ) = flow {
+
+        val user = dataSource.findByUser(
+            email,
+            password
+        )?.toDomain()
+
+        emit(user)
     }
 }

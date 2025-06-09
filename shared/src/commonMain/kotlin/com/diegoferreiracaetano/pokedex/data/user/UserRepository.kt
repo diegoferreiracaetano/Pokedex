@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     fun users(): Flow<List<User>>
     suspend fun save(user: User)
+    fun findByUser(email: String, password: String): Flow<User?>
 }

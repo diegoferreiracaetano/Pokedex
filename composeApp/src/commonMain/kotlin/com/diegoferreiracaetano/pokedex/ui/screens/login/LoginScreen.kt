@@ -1,182 +1,218 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.login
 
-
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
+import com.diegoferreiracaetano.pokedex.domain.user.User
+import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
-import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
+import com.diegoferreiracaetano.pokedex.ui.components.feedback.FeedbackScreen
+import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
-import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
-import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.SIGN_UP
+import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
+import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
+import com.diegoferreiracaetano.pokedex.util.getLogger
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import pokedex.composeapp.generated.resources.Res
-import pokedex.composeapp.generated.resources.apple
-import pokedex.composeapp.generated.resources.auth_continue_with_apple
-import pokedex.composeapp.generated.resources.auth_continue_with_email
-import pokedex.composeapp.generated.resources.auth_continue_with_google
-import pokedex.composeapp.generated.resources.auth_description
-import pokedex.composeapp.generated.resources.character_lusamine
-import pokedex.composeapp.generated.resources.character_red
-import pokedex.composeapp.generated.resources.google
-import pokedex.composeapp.generated.resources.login_title
-import pokedex.composeapp.generated.resources.login_toolbar_title
-import pokedex.composeapp.generated.resources.signup_title
-import pokedex.composeapp.generated.resources.signup_toolbar_title
+import pokedex.composeapp.generated.resources.action_continue
+import pokedex.composeapp.generated.resources.action_enter
+import pokedex.composeapp.generated.resources.forgot_password
+import pokedex.composeapp.generated.resources.login_screen_subtitle
+import pokedex.composeapp.generated.resources.login_screen_title
+import pokedex.composeapp.generated.resources.login_welcome_description
+import pokedex.composeapp.generated.resources.login_welcome_title
+import pokedex.composeapp.generated.resources.title_email
+import pokedex.composeapp.generated.resources.title_password
+import pokedex.composeapp.generated.resources.welcome
 
-enum class AuthScreenType {
-    LOGIN,
-    SIGN_UP
-}
-
-data class AuthScreenData(
-    val toolbarTitle: StringResource,
-    val title: StringResource,
-    val description: StringResource,
-    val imageRes: DrawableResource
-)
-
-private object AuthScreenDataProvider {
-
-    operator fun invoke(type: AuthScreenType): AuthScreenData {
-        return when (type) {
-            LOGIN -> AuthScreenData(
-                toolbarTitle = Res.string.login_toolbar_title,
-                title = Res.string.login_title,
-                description = Res.string.auth_description,
-                imageRes = Res.drawable.character_lusamine
-            )
-            SIGN_UP -> AuthScreenData(
-                toolbarTitle = Res.string.signup_toolbar_title,
-                title = Res.string.signup_title,
-                description = Res.string.auth_description,
-                imageRes = Res.drawable.character_red
-            )
-        }
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OnboardingFinishScreen(
-    type: AuthScreenType = LOGIN,
+fun LoginScreen(
+    onFinish: () -> Unit,
     onBack: () -> Unit,
-    onAccountCreated: () -> Unit,
-    modifier: Modifier = Modifier
+    onForgotPassword: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = koinInject()
 ) {
 
-    val screenData = AuthScreenDataProvider(type)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    AppTopBar(
-        stringResource(screenData.toolbarTitle),
-        onBack,
-        modifier,
-    ) { modifier ->
-        LoginContent(
-            screenData,
-            onAccountCreated, // change to create account
-            {},
-            {},
-            modifier
-        )
-    }
+    getLogger().d("TESTE", uiState.toString())
+
+    LoginScreenContent(
+        isLoading = uiState.isLoading,
+        user = uiState.success,
+        error = uiState.error,
+        onLogin = { email, password->
+            viewModel.login(email, password)
+        },
+        onFinish = onFinish,
+        onBack = onBack,
+        onForgotPassword = onForgotPassword,
+        modifier = modifier
+    )
 }
 
 @Composable
-fun LoginContent(
-    authScreenData: AuthScreenData,
-    onCreateAccount: () -> Unit,
-    onCreateAccountApple: () -> Unit,
-    onCreateAccountGoogle: () -> Unit,
-    modifier: Modifier = Modifier
+private fun LoginScreenContent(
+    isLoading: Boolean,
+    user: User?,
+    error: String?,
+    onLogin: (String, String) -> Unit,
+    onFinish: () -> Unit,
+    onBack: () -> Unit,
+    onForgotPassword: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
 
-        Spacer(modifier = Modifier.weight(0.3f))
-
-        Image(
-            painter = painterResource(authScreenData.imageRes),
-            contentDescription = stringResource(authScreenData.title),
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .aspectRatio(1f),
-            contentScale = ContentScale.Fit
+    if (isLoading) {
+        ScreenLoading(modifier)
+    }
+    else if (user != null) {
+        FeedbackScreen(
+            title = Res.string.login_welcome_title,
+            description = Res.string.login_welcome_description,
+            imageRes = Res.drawable.welcome,
+            buttonText = Res.string.action_continue,
+            onClick = onFinish,
+            modifier = modifier
         )
+    }
+    else {
 
-        Spacer(modifier = Modifier.weight(0.7f))
+        var emailValue by remember { mutableStateOf("") }
+        var passwordValue by remember { mutableStateOf("") }
+        var isEmailError by remember { mutableStateOf(false) }
+        var isPasswordError by remember { mutableStateOf(false) }
+        val snackbarHostState = remember { SnackbarHostState() }
 
-        Text(
-            text = stringResource(Res.string.login_title),
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center
-        )
+        LaunchedEffect(error) {
+            if (!error.isNullOrEmpty()) {
+                snackbarHostState.showSnackbar(error)
+            }
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        AppTopBar(
+            stringResource(Res.string.action_enter),
+            onBack = onBack,
+            snackbarHostState = snackbarHostState,
+            modifier = modifier
+        ) { padding->
+            isEmailError = CreateAccountStepType.EMAIL.getValidationError(emailValue)
+            isPasswordError = CreateAccountStepType.PASSWORD.getValidationError(passwordValue)
 
-        Text(
-            text = stringResource(authScreenData.description),
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
+            val focusRequester = remember { FocusRequester() }
+            val keyboardController = LocalSoftwareKeyboardController.current
 
-        Spacer(modifier = Modifier.height(16.dp))
+            LaunchedEffect(Unit) {
+                if(error.isNullOrEmpty()) {
+                    focusRequester.requestFocus()
+                    keyboardController?.show()
+                }
+            }
 
-        AppButton(
-            image = Res.drawable.apple,
-            text = stringResource(Res.string.auth_continue_with_apple),
-            type = ButtonType.TERTIARY,
-            onClick = onCreateAccountApple
-        )
+            Column(
+                modifier = padding
+                    .fillMaxSize()
+                    .imePadding()
+                    .padding(start = 16.dp, end = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = stringResource(Res.string.login_screen_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = stringResource(Res.string.login_screen_subtitle),
+                    style = MaterialTheme.typography.titleLarge
+                )
 
-        AppButton(
-            image = Res.drawable.google,
-            text = stringResource(Res.string.auth_continue_with_google),
-            type = ButtonType.TERTIARY,
-            onClick = onCreateAccountGoogle
-        )
+                Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                AppTextField(
+                    value = emailValue,
+                    onValueChange = { emailValue = it },
+                    placeholder = Res.string.title_email,
+                    isError = isEmailError,
+                    type = TextFieldType.Email,
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                )
 
-        AppButton(
-            text = stringResource(Res.string.auth_continue_with_email),
-            onClick = onCreateAccount
-        )
+                Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                AppTextField(
+                    value = passwordValue,
+                    onValueChange = { passwordValue = it },
+                    placeholder = Res.string.title_password,
+                    isError = isPasswordError,
+                    type = TextFieldType.Password,
+                    modifier = Modifier
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = stringResource(Res.string.forgot_password),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable(onClick = onForgotPassword)
+                )
+
+                Spacer(modifier = Modifier.weight(0.1F))
+
+                AppButton(
+                    text = stringResource(Res.string.action_enter),
+                    enabled =
+                        (emailValue.isNotEmpty() && !isEmailError) &&
+                                (passwordValue.isNotEmpty() && !isPasswordError),
+                    onClick = { onLogin(emailValue, passwordValue) }
+                )
+            }
+        }
     }
 }
 
 @Preview
 @Composable
-fun OnboardingFinishScreenPreview() {
+fun LoginScreenPreview() {
     PokedexTheme {
-        OnboardingFinishScreen(SIGN_UP,{}, {})
+        LoginScreenContent(
+            false,
+            null,
+            null,
+            {_, _->},
+            {},
+            {},
+            {},
+            Modifier.padding(8.dp)
+        )
     }
 }

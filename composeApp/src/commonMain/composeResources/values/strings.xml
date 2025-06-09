@@ -1,10 +1,13 @@
 <resources>
     <string name="action_back">Voltar</string>
     <string name="action_continue">Continuar</string>
+    <string name="action_enter">Entrar</string>
 
     <string name="title_email">E-mail</string>
     <string name="title_password">Senha</string>
     <string name="title_name">Nome</string>
+
+   <string name="forgot_password">Esqueceu sua senha?</string>
 
     //onboarding
     <string name="skip">Pular  -></string>
@@ -17,8 +20,13 @@
     //login
     <string name="signup_toolbar_title">Criar conta</string>
     <string name="signup_title">Que bom te ver aqui novamente!</string>
-    <string name="login_toolbar_title">Entrar</string>
+
     <string name="login_title">Falta pouco para explorar esse mundo!</string>
+    <string name="login_screen_title">Bem vindo de volta!</string>
+    <string name="login_screen_subtitle">Preencha os dados</string>
+    <string name="login_welcome_title">Bem-vindo de volta, Treinador!</string>
+    <string name="login_welcome_description">Esperamos que tenha tido uma longa jornada desde a última vez em que nos visitou.</string>
+
 
     <string name="auth_description">Como deseja se conectar?</string>
     <string name="auth_continue_with_apple">Continuar com a Apple</string>
@@ -38,8 +46,10 @@
     <string name="create_password_getting_starting">Agora…</string>
     <string name="create_name_getting_starting">Pra finalizar</string>
 
-    //feeback
+
     <string name="feedback_title">Sua conta foi criada com Sucesso!</string>
     <string name="feedback_description">Seja bem-vindo, treinador! Estamos animados para acompanhar sua jornada.</string>
+
+
 
 </resources>

@@ -1,15 +1,11 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.account
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
 import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
@@ -24,8 +20,8 @@ import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.create_account
 import pokedex.composeapp.generated.resources.feedback_description
-import pokedex.composeapp.generated.resources.register_success
 import pokedex.composeapp.generated.resources.feedback_title
+import pokedex.composeapp.generated.resources.register_success
 
 @Composable
 fun CreateAccountScreen(
@@ -36,7 +32,6 @@ fun CreateAccountScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateAccountViewModel = koinInject()
 ) {
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CreateAccountScreenContent(
