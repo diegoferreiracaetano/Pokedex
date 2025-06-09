@@ -37,7 +37,7 @@ val DarkColorScheme = darkColorScheme(
     primary = BluePrimaryDark,
     onPrimary = BlueOnPrimaryDark,
     primaryContainer = BlueOnPrimaryContainerDark,
-    onPrimaryContainer = BluePrimaryContainer,
+    onPrimaryContainer = BluePrimaryContainerDark,
 
     secondary = ErrorDark,
     onSecondary = OnErrorDark,

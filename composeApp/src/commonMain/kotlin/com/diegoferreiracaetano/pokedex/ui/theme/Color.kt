@@ -7,9 +7,10 @@ val BluePrimaryContainer = Color(0xFFDEE6FF)
 val BlueOnPrimary = Color.White
 val BlueOnPrimaryContainer = Color(0xFF00164D)
 
-val BluePrimaryDark = Color(0xFFB0C6FF)
-val BlueOnPrimaryDark = Color(0xFF002A79)
-val BlueOnPrimaryContainerDark = Color(0xFF003CA8)
+val BluePrimaryDark = Color(0xFFAEBEFF)
+val BluePrimaryContainerDark = Color(0xFFAEBEFF)
+val BlueOnPrimaryDark = Color(0xFF00164D)
+val BlueOnPrimaryContainerDark = Color(0xFFDEE6FF)
 
 val RedSecondary = Color(0xFFCC2B2B)
 val RedSecondaryContainer = Color(0xFFFFDAD6)

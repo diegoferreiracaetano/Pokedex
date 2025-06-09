@@ -1,5 +1,6 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +36,6 @@ import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import com.diegoferreiracaetano.pokedex.util.getLogger
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -60,8 +61,6 @@ fun LoginScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    getLogger().d("TESTE", uiState.toString())
 
     LoginScreenContent(
         isLoading = uiState.isLoading,
@@ -142,7 +141,7 @@ private fun LoginScreenContent(
                     .padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.weight(0.2f))
 
                 Text(
                     text = stringResource(Res.string.login_screen_title),
@@ -186,7 +185,7 @@ private fun LoginScreenContent(
                     modifier = Modifier.clickable(onClick = onForgotPassword)
                 )
 
-                Spacer(modifier = Modifier.weight(0.1F))
+                Spacer(modifier = Modifier.weight(0.8f))
 
                 AppButton(
                     text = stringResource(Res.string.action_enter),
@@ -195,6 +194,8 @@ private fun LoginScreenContent(
                                 (passwordValue.isNotEmpty() && !isPasswordError),
                     onClick = { onLogin(emailValue, passwordValue) }
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
@@ -211,8 +212,7 @@ fun LoginScreenPreview() {
             {_, _->},
             {},
             {},
-            {},
-            Modifier.padding(8.dp)
+            {}
         )
     }
 }

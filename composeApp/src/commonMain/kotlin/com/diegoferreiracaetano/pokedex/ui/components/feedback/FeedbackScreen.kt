@@ -75,11 +75,14 @@ fun FeedbackScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
-
         AppButton(
             text = stringResource(buttonText),
             onClick = onClick
         )
+
+
+        Spacer(modifier = Modifier.height(8.dp))
+
     }
 }
 

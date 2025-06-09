@@ -75,7 +75,7 @@ fun AppButonPrimary(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = White,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             disabledContainerColor = GrayDisabledBackground,
             disabledContentColor = GrayDisabledText
         ),
@@ -101,7 +101,9 @@ fun AppButonSecondary(
         enabled = enabled,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
         colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = MaterialTheme.colorScheme.onPrimary,
             contentColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = GrayDisabledBackground,
             disabledContentColor = GrayDisabledText
         ),
         modifier = modifier
@@ -127,7 +129,9 @@ fun AppButonTertiary(
         enabled = enabled,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
         colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = White,
             contentColor = Black800,
+            disabledContainerColor = GrayDisabledBackground,
             disabledContentColor = GrayDisabledText
         ),
         modifier = modifier
@@ -198,10 +202,9 @@ fun ElementButton(
 @Preview
 @Composable
 fun AppButtonPrimaryPreview() {
-    PokedexTheme {
+    PokedexTheme(darkTheme = true) {
         Column(
             modifier = Modifier
-                .background(color = White)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {

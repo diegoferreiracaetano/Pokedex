@@ -146,6 +146,8 @@ fun CreateAccountStep(
             enabled = value.isNotEmpty() && !isError,
             onClick = onButtonClick
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 

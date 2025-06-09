@@ -82,13 +82,15 @@ fun OnboardingFinishScreen(
             onClick = onCreateAccount
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         AppButton(
             text = stringResource(Res.string.already_have_account),
             type = ButtonType.SECONDARY,
             onClick = onLogin
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 

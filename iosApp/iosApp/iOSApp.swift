@@ -1,11 +1,11 @@
 import SwiftUI
-import composeApp
+import ComposeApp
 
 @main
 struct iOSApp: App {
 
     init() {
-        KoinModuleKt.doInitKoin() // Liga o Koin
+        AppModuleKt.doInitKoin()
     }
 
     var body: some Scene {
