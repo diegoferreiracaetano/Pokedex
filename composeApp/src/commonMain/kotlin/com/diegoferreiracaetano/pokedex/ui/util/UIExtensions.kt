@@ -1,6 +1,10 @@
 package com.diegoferreiracaetano.pokedex.ui.util
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +14,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -25,12 +29,12 @@ data class UiState<out T>(
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <T, R> Flow<T?>.asUiState(
     scope: CoroutineScope,
-    initialState: UiState<R> = UiState(),
+    initialState: UiState<R> = UiState(isLoading = false),
     transform: (T) -> Flow<R>
 ): StateFlow<UiState<R>> {
     return this
         .filterNotNull()
-        .flatMapLatest { trigger ->
+        .flatMapMerge { trigger ->
             transform(trigger)
                 .map { result ->
                     UiState(success = result)
@@ -110,3 +114,17 @@ fun <T, R> ViewModel.produceUiState(
 //    data object Loading : UiState<Nothing>
 //    data class Error(val throwable: Throwable? = null) : UiState<Nothing>
 //}
+
+fun String.toAnnotatedStringWithStyledPlaceholder(
+    placeholder: String,
+    style: SpanStyle
+): AnnotatedString {
+    val parts = this.split("%s", limit = 2)
+    return buildAnnotatedString {
+        append(parts.getOrNull(0) ?: "")
+        withStyle(style) {
+            append(placeholder)
+        }
+        append(parts.getOrNull(1) ?: "")
+    }
+}

@@ -38,6 +38,11 @@ class TaskNetworkDataSource {
         delay(SERVICE_LATENCY_IN_MILLIS)
         return users.find { it.email == email && it.password == password }
     }
+
+    suspend fun findByEmail(email: String): UserRemote? = accessMutex.withLock {
+        delay(SERVICE_LATENCY_IN_MILLIS)
+        return users.find { it.email == email}
+    }
 }
 
 private const val SERVICE_LATENCY_IN_MILLIS = 2000L

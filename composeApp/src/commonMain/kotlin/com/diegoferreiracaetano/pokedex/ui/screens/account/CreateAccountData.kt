@@ -134,7 +134,7 @@ fun CreateAccountStep(
             placeholder = step.placeholderRes,
             isError = isError,
             type = step.fieldType,
-            supportingText = stringResource(step.supportingTextRes),
+            supportingText = step.supportingTextRes,
             modifier = Modifier
                 .focusRequester(focusRequester)
         )

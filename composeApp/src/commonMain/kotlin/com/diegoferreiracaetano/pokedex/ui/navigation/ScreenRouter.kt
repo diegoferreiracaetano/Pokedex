@@ -25,4 +25,14 @@ sealed class ScreenRouter(val route: String) {
     }
 
     object Login : ScreenRouter("login")
+
+    object ForgotPassword : ScreenRouter("forgot_password")
+
+    object SendCode : ScreenRouter("send_code/{contact}") {
+        const val CONTACT_ARG = "contact"
+
+        fun routeWithContact(contact: String): String {
+            return "send_code/${contact}"
+        }
+    }
 }

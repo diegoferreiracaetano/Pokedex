@@ -5,6 +5,8 @@ import com.diegoferreiracaetano.pokedex.data.user.source.remote.TaskNetworkDataS
 import com.diegoferreiracaetano.pokedex.data.user.source.remote.UserRepositoryRemote
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountUseCase
 import com.diegoferreiracaetano.pokedex.domain.user.LoginUseCase
+import com.diegoferreiracaetano.pokedex.domain.user.SendCodeUseCase
+import com.diegoferreiracaetano.pokedex.domain.user.VerifyCodeUseCase
 import org.koin.dsl.module
 
 val sharedModule = module {
@@ -15,4 +17,6 @@ val sharedModule = module {
 
     single { CreateAccountUseCase(get()) }
     single { LoginUseCase(get()) }
+    single { SendCodeUseCase(get()) }
+    single { VerifyCodeUseCase(get()) }
 }

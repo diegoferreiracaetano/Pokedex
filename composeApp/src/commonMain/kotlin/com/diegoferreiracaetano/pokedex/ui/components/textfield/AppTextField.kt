@@ -30,6 +30,8 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
+import pokedex.composeapp.generated.resources.email_message_validation
+import pokedex.composeapp.generated.resources.password_message_validation
 import pokedex.composeapp.generated.resources.title_email
 import pokedex.composeapp.generated.resources.title_password
 
@@ -43,7 +45,7 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: StringResource,
-    supportingText: String = "",
+    supportingText: StringResource? = null,
     isError: Boolean = false,
     type: TextFieldType = TextFieldType.Email,
     modifier: Modifier = Modifier
@@ -107,9 +109,9 @@ fun AppTextField(
                 .height(56.dp)
         )
 
-        if (supportingText.isNotEmpty()) {
+        if (supportingText != null) {
             Text(
-                text = supportingText,
+                text = stringResource(supportingText),
                 color = supportingTextColor,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
@@ -140,7 +142,7 @@ fun AppTextFieldPreview() {
                 placeholder = Res.string.title_email,
                 isError = email.contains("cm"),
                 type = TextFieldType.Email,
-                supportingText = "Informe um e-mail válido."
+                supportingText = Res.string.email_message_validation
             )
 
             AppTextField(
@@ -149,7 +151,7 @@ fun AppTextFieldPreview() {
                 placeholder = Res.string.title_password,
                 isError = password.length < 6,
                 type = TextFieldType.Password,
-                supportingText = "Use um endereço de e-mail válido."
+                supportingText = Res.string.password_message_validation
             )
         }
     }

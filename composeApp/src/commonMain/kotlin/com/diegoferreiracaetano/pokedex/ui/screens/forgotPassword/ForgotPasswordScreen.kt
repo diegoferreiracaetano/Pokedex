@@ -1,7 +1,6 @@
-package com.diegoferreiracaetano.pokedex.ui.screens.login
+package com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,10 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.domain.user.User
 import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
-import com.diegoferreiracaetano.pokedex.ui.components.feedback.FeedbackScreen
 import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
@@ -41,74 +38,55 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
-import pokedex.composeapp.generated.resources.action_enter
-import pokedex.composeapp.generated.resources.email_message_validation
-import pokedex.composeapp.generated.resources.forgot_password
-import pokedex.composeapp.generated.resources.login_screen_subtitle
-import pokedex.composeapp.generated.resources.login_screen_title
-import pokedex.composeapp.generated.resources.login_welcome_description
-import pokedex.composeapp.generated.resources.login_welcome_title
-import pokedex.composeapp.generated.resources.password_message_validation
+import pokedex.composeapp.generated.resources.create_email_title
+import pokedex.composeapp.generated.resources.forgot_password_description
+import pokedex.composeapp.generated.resources.forgot_password_subtitle
+import pokedex.composeapp.generated.resources.forgot_password_title
 import pokedex.composeapp.generated.resources.title_email
-import pokedex.composeapp.generated.resources.title_password
-import pokedex.composeapp.generated.resources.welcome
 
 @Composable
-fun LoginScreen(
-    onFinish: () -> Unit,
+fun ForgotPasswordScreen(
+    onSendCode: (String) -> Unit,
     onBack: () -> Unit,
-    onForgotPassword: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = koinInject()
+    viewModel: ForgotPasswordViewModel = koinInject()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LoginScreenContent(
+    LaunchedEffect(uiState.success) {
+        uiState.success?.let {
+            onSendCode(it)
+        }
+    }
+
+    ForgotPasswordContent(
         isLoading = uiState.isLoading,
-        user = uiState.success,
         error = uiState.error,
-        onLogin = { email, password->
-            viewModel.login(email, password)
+        onRecoveryPassword = { email->
+            viewModel.recoveryPassword(email)
         },
-        onFinish = onFinish,
         onBack = onBack,
-        onForgotPassword = onForgotPassword,
         modifier = modifier
     )
 }
 
 @Composable
-private fun LoginScreenContent(
+private fun ForgotPasswordContent(
     isLoading: Boolean,
-    user: User?,
     error: String?,
-    onLogin: (String, String) -> Unit,
-    onFinish: () -> Unit,
+    onRecoveryPassword: (String) -> Unit,
     onBack: () -> Unit,
-    onForgotPassword: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
     if (isLoading) {
         ScreenLoading(modifier, true)
     }
-    else if (user != null) {
-        FeedbackScreen(
-            title = Res.string.login_welcome_title,
-            description = Res.string.login_welcome_description,
-            imageRes = Res.drawable.welcome,
-            buttonText = Res.string.action_continue,
-            onClick = onFinish,
-            modifier = modifier
-        )
-    }
     else {
 
         var emailValue by remember { mutableStateOf("") }
-        var passwordValue by remember { mutableStateOf("") }
         var isEmailError by remember { mutableStateOf(false) }
-        var isPasswordError by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
 
         LaunchedEffect(error) {
@@ -118,13 +96,12 @@ private fun LoginScreenContent(
         }
 
         AppTopBar(
-            stringResource(Res.string.action_enter),
+            stringResource(Res.string.forgot_password_title),
             onBack = onBack,
             snackbarHostState = snackbarHostState,
             modifier = modifier
         ) { padding->
             isEmailError = CreateAccountStepType.EMAIL.getValidationError(emailValue)
-            isPasswordError = CreateAccountStepType.PASSWORD.getValidationError(passwordValue)
 
             val focusRequester = remember { FocusRequester() }
             val keyboardController = LocalSoftwareKeyboardController.current
@@ -147,12 +124,12 @@ private fun LoginScreenContent(
                 Spacer(modifier = Modifier.weight(0.15f))
 
                 Text(
-                    text = stringResource(Res.string.login_screen_title),
+                    text = stringResource(Res.string.create_email_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Normal
                 )
                 Text(
-                    text = stringResource(Res.string.login_screen_subtitle),
+                    text = stringResource(Res.string.forgot_password_subtitle),
                     style = MaterialTheme.typography.titleLarge,
                 )
 
@@ -164,40 +141,18 @@ private fun LoginScreenContent(
                     placeholder = Res.string.title_email,
                     isError = isEmailError,
                     type = TextFieldType.Email,
-                    supportingText = Res.string.email_message_validation,
+                    supportingText = Res.string.forgot_password_description,
                     modifier = Modifier
                         .focusRequester(focusRequester)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                AppTextField(
-                    value = passwordValue,
-                    onValueChange = { passwordValue = it },
-                    placeholder = Res.string.title_password,
-                    isError = isPasswordError,
-                    type = TextFieldType.Password,
-                    supportingText = Res.string.password_message_validation,
-                    modifier = Modifier
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = stringResource(Res.string.forgot_password),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = colorScheme.primary,
-                    modifier = Modifier.clickable(onClick = onForgotPassword)
                 )
 
                 Spacer(modifier = Modifier.weight(0.8f))
 
                 AppButton(
-                    text = stringResource(Res.string.action_enter),
+                    text = stringResource(Res.string.action_continue),
                     enabled =
-                        (emailValue.isNotEmpty() && !isEmailError) &&
-                                (passwordValue.isNotEmpty() && !isPasswordError),
-                    onClick = { onLogin(emailValue, passwordValue) }
+                        (emailValue.isNotEmpty() && !isEmailError),
+                    onClick = { onRecoveryPassword(emailValue) }
                 )
             }
         }
@@ -206,14 +161,11 @@ private fun LoginScreenContent(
 
 @Preview
 @Composable
-fun LoginScreenPreview() {
+fun ForgotPasswordScreenPreview() {
     PokedexTheme(true) {
-        LoginScreenContent(
+        ForgotPasswordContent(
             false,
             null,
-            null,
-            {_, _->},
-            {},
             {},
             {}
         )

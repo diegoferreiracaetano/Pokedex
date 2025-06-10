@@ -1,4 +1,4 @@
-package com.diegoferreiracaetano.pokedex.ui.screens
+package com.diegoferreiracaetano.pokedex.ui.screens.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

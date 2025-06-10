@@ -7,13 +7,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.*
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ForgotPassword
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Login
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
-import com.diegoferreiracaetano.pokedex.ui.screens.HomeScreen
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ForgotPasswordScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.home.HomeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
-import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.*
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
+import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.SIGN_UP
 import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.PreLoginScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingFinishScreen
@@ -86,9 +97,27 @@ fun AppNavGraph(
             LoginScreen(
                 onFinish = { navController.navigateClearBackStackTo(Home.route) },
                 onBack = { navController.popBackStack() },
-                onForgotPassword = {
+                onForgotPassword = { navController.navigate(ForgotPassword.route) },
+                modifier = modifier
+            )
+        }
 
+        composable(ForgotPassword.route) {
+            ForgotPasswordScreen(
+                onSendCode = { contact->
+                    navController.navigate(SendCode.routeWithContact(contact))
                 },
+                onBack = { navController.popBackStack() },
+                modifier = modifier
+            )
+        }
+
+        composable(SendCode.route) {  backStackEntry ->
+            val contact = backStackEntry.readOrDefault(CONTACT_ARG, "")
+            SendCodeScreen(
+                contact = contact,
+                onFinish = { navController.navigateClearBackStackTo(Login.route) },
+                onBack = { navController.popBackStack() },
                 modifier = modifier
             )
         }

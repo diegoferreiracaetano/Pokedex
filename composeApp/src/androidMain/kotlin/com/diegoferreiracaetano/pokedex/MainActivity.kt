@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.diegoferreiracaetano.pokedex.ui.screens.SplashScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.splash.SplashScreen
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {

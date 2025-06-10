@@ -8,6 +8,23 @@
     <string name="title_name">Nome</string>
 
    <string name="forgot_password">Esqueceu sua senha?</string>
+   <string name="forgot_password_title">Esqueci minha senha</string>
+   <string name="forgot_password_subtitle">Vamos recuperar!</string>
+   <string name="forgot_password_description">Vamos enviar um código de verificação para o seu e-mail.</string>
+
+    <string name="password_reset_title">Senha alterada com sucesso!</string>
+    <string name="password_reset_description">Agora você já pode fazer o login com sua nova senha</string>
+
+    <string name="send_code_title">Insira o código</string>
+    <string name="send_code_subtitle">Digite o código de 6 dígitos enviado para  </string>
+
+   <string name="email_message_validation">Informe um e-mail válido.</string>
+   <string name="password_message_validation">Use uma senha válida.</string>
+
+    <string name="otp_error_default">Código inválido. Tente novamente.</string>
+    <string name="otp_resend_prompt">Não recebeu o código? </string>
+    <string name="otp_resend_now">Reenvie agora</string>
+    <string name="otp_resend_in">Reenvie em %1$s</string>
 
     //onboarding
     <string name="skip">Pular  -></string>
@@ -46,9 +63,9 @@
     <string name="create_password_getting_starting">Agora…</string>
     <string name="create_name_getting_starting">Pra finalizar</string>
 
-
     <string name="feedback_title">Sua conta foi criada com Sucesso!</string>
     <string name="feedback_description">Seja bem-vindo, treinador! Estamos animados para acompanhar sua jornada.</string>
+
 
 
 
