@@ -1,6 +1,7 @@
 package com.diegoferreiracaetano.pokedex.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Typography
@@ -11,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Immutable
@@ -145,7 +147,6 @@ fun PokedexTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val darkTheme = true
     val colorScheme = if (darkTheme) darkScheme else lightScheme
     val extendedColors = if (darkTheme) extendedLight else extendedDark
 
@@ -159,6 +160,7 @@ fun PokedexTheme(
             shapes = Shapes
         ) {
             Surface(
+                modifier = Modifier.fillMaxSize(),
                 color = colorScheme.surface
             ) {
                 content()

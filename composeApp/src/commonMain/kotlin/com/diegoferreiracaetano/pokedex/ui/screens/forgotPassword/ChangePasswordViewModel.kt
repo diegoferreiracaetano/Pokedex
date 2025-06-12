@@ -5,7 +5,7 @@ import com.diegoferreiracaetano.pokedex.domain.user.SendCodeUseCase
 import com.diegoferreiracaetano.pokedex.ui.util.produceUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ForgotPasswordViewModel(
+class ChangePasswordViewModel(
     private val sendCodeUseCase: SendCodeUseCase
 ): ViewModel() {
 

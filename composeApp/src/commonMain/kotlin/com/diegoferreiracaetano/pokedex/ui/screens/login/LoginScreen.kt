@@ -57,7 +57,7 @@ import pokedex.composeapp.generated.resources.welcome
 fun LoginScreen(
     onFinish: () -> Unit,
     onBack: () -> Unit,
-    onForgotPassword: () -> Unit,
+    onChangePassword: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = koinInject()
 ) {
@@ -73,7 +73,7 @@ fun LoginScreen(
         },
         onFinish = onFinish,
         onBack = onBack,
-        onForgotPassword = onForgotPassword,
+        onChangePassword = onChangePassword,
         modifier = modifier
     )
 }
@@ -86,7 +86,7 @@ private fun LoginScreenContent(
     onLogin: (String, String) -> Unit,
     onFinish: () -> Unit,
     onBack: () -> Unit,
-    onForgotPassword: () -> Unit,
+    onChangePassword: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -138,8 +138,6 @@ private fun LoginScreenContent(
 
             Column(
                 modifier = padding
-                    .fillMaxSize()
-                    .background(colorScheme.surface)
                     .imePadding()
                     .padding(start = 16.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -187,7 +185,7 @@ private fun LoginScreenContent(
                     text = stringResource(Res.string.forgot_password),
                     style = MaterialTheme.typography.labelMedium,
                     color = colorScheme.primary,
-                    modifier = Modifier.clickable(onClick = onForgotPassword)
+                    modifier = Modifier.clickable(onClick = onChangePassword)
                 )
 
                 Spacer(modifier = Modifier.weight(0.8f))

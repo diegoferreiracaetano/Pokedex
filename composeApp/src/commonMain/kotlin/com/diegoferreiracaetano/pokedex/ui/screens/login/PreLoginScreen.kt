@@ -118,7 +118,7 @@ fun PreLoginContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.weight(0.3f))
+        Spacer(modifier = Modifier.weight(0.1f))
 
         Image(
             painter = painterResource(authScreenData.imageRes),
@@ -129,7 +129,7 @@ fun PreLoginContent(
             contentScale = ContentScale.Fit
         )
 
-        Spacer(modifier = Modifier.weight(0.7f))
+        Spacer(modifier = Modifier.weight(0.3f))
 
         Text(
             text = stringResource(Res.string.login_title),
@@ -145,7 +145,7 @@ fun PreLoginContent(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.weight(0.3f))
 
         AppButton(
             image = Res.drawable.apple,
@@ -154,7 +154,7 @@ fun PreLoginContent(
             onClick = onCreateAccountApple
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         AppButton(
             image = Res.drawable.google,
@@ -163,14 +163,14 @@ fun PreLoginContent(
             onClick = onCreateAccountGoogle
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         AppButton(
             text = stringResource(Res.string.auth_continue_with_email),
             onClick = onCreateAccount
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

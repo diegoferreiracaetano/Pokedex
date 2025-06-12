@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedButton
@@ -26,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.diegoferreiracaetano.pokedex.ui.theme.Black800
 import com.diegoferreiracaetano.pokedex.ui.theme.GrayDisabledBackground
 import com.diegoferreiracaetano.pokedex.ui.theme.GrayDisabledText
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
@@ -74,11 +72,6 @@ fun AppButonPrimary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 4.dp,
-            pressedElevation = 8.dp,
-            disabledElevation = 0.dp
-        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -105,14 +98,9 @@ fun AppButonSecondary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 4.dp,
-            pressedElevation = 8.dp,
-            disabledElevation = 0.dp
-        ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
             disabledContainerColor = GrayDisabledBackground,
             disabledContentColor = GrayDisabledText
@@ -138,11 +126,6 @@ fun AppButonTertiary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 4.dp,
-            pressedElevation = 8.dp,
-            disabledElevation = 0.dp
-        ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.onSecondary,

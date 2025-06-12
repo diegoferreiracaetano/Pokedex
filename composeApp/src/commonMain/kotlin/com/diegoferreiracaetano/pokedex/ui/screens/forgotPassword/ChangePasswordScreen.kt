@@ -32,6 +32,7 @@ import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType.*
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -40,16 +41,15 @@ import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.create_email_title
 import pokedex.composeapp.generated.resources.forgot_password_description
-import pokedex.composeapp.generated.resources.forgot_password_subtitle
-import pokedex.composeapp.generated.resources.forgot_password_title
 import pokedex.composeapp.generated.resources.title_email
 
 @Composable
-fun ForgotPasswordScreen(
+fun ChangePasswordScreen(
+    type: ChangePasswordType,
     onSendCode: (String) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ForgotPasswordViewModel = koinInject()
+    viewModel: ChangePasswordViewModel = koinInject()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -60,7 +60,8 @@ fun ForgotPasswordScreen(
         }
     }
 
-    ForgotPasswordContent(
+    ChangePasswordContent(
+        type = type,
         isLoading = uiState.isLoading,
         error = uiState.error,
         onRecoveryPassword = { email->
@@ -72,7 +73,8 @@ fun ForgotPasswordScreen(
 }
 
 @Composable
-private fun ForgotPasswordContent(
+private fun ChangePasswordContent(
+    type: ChangePasswordType,
     isLoading: Boolean,
     error: String?,
     onRecoveryPassword: (String) -> Unit,
@@ -88,6 +90,7 @@ private fun ForgotPasswordContent(
         var emailValue by remember { mutableStateOf("") }
         var isEmailError by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
+        val texts = type.toUI()
 
         LaunchedEffect(error) {
             if (!error.isNullOrEmpty()) {
@@ -96,7 +99,7 @@ private fun ForgotPasswordContent(
         }
 
         AppTopBar(
-            stringResource(Res.string.forgot_password_title),
+            stringResource(texts.title),
             onBack = onBack,
             snackbarHostState = snackbarHostState,
             modifier = modifier
@@ -129,7 +132,7 @@ private fun ForgotPasswordContent(
                     fontWeight = FontWeight.Normal
                 )
                 Text(
-                    text = stringResource(Res.string.forgot_password_subtitle),
+                    text = stringResource(texts.subtitle),
                     style = MaterialTheme.typography.titleLarge,
                 )
 
@@ -161,9 +164,10 @@ private fun ForgotPasswordContent(
 
 @Preview
 @Composable
-fun ForgotPasswordScreenPreview() {
-    PokedexTheme(true) {
-        ForgotPasswordContent(
+fun ChangePasswordScreenPreview() {
+    PokedexTheme {
+        ChangePasswordContent(
+            UPDATE,
             false,
             null,
             {},

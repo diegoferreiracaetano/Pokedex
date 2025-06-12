@@ -7,19 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.*
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ForgotPassword
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Login
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ForgotPasswordScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType.*
 import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.home.HomeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
@@ -97,13 +92,18 @@ fun AppNavGraph(
             LoginScreen(
                 onFinish = { navController.navigateClearBackStackTo(Home.route) },
                 onBack = { navController.popBackStack() },
-                onForgotPassword = { navController.navigate(ForgotPassword.route) },
+                onChangePassword = {
+                    navController.navigate(ChangePassword.routeWithType(FORGOT))
+                },
                 modifier = modifier
             )
         }
 
-        composable(ForgotPassword.route) {
-            ForgotPasswordScreen(
+        composable(ChangePassword.route) { backStackEntry ->
+            val type = backStackEntry.readEnumOrDefault(TYPE_ARG, ChangePasswordType.entries.first())
+
+            ChangePasswordScreen(
+                type = type,
                 onSendCode = { contact->
                     navController.navigate(SendCode.routeWithContact(contact))
                 },

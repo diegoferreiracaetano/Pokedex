@@ -2,7 +2,6 @@ package com.diegoferreiracaetano.pokedex.ui.components.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
@@ -21,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -47,43 +44,44 @@ fun AppTopBar(
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
+    Scaffold(
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = {
+            snackbarHostState?.let {
+                AppSnackbarHost(hostState = it)
+            }
+        },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        title,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                },
 
-        Scaffold(
-            modifier = modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            snackbarHost = {
-                snackbarHostState?.let {
-                    AppSnackbarHost(hostState = it)
-                }
-            },
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            title,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.labelLarge
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(Res.string.action_back)
                         )
-                    },
-
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(Res.string.action_back)
-                            )
-                        }
-                    },
-                    scrollBehavior = scrollBehavior,
-                )
-            },
-        ) { innerPadding ->
-
-            content(
-                modifier
-                    .padding(innerPadding)
+                    }
+                },
+                scrollBehavior = scrollBehavior,
             )
-        }
+        },
+    ) { innerPadding ->
+
+        content(
+            modifier
+                .fillMaxSize()
+                .background(colorScheme.surface)
+                .padding(innerPadding)
+        )
+    }
 
 }
 

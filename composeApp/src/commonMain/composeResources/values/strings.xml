@@ -12,6 +12,9 @@
    <string name="forgot_password_subtitle">Vamos recuperar!</string>
    <string name="forgot_password_description">Vamos enviar um código de verificação para o seu e-mail.</string>
 
+    <string name="update_password_title">Confirmar e-mail</string>
+    <string name="update_password_subtitle">Iremos confirmá-lo</string>
+
     <string name="password_reset_title">Senha alterada com sucesso!</string>
     <string name="password_reset_description">Agora você já pode fazer o login com sua nova senha</string>
 
