@@ -40,7 +40,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
-import pokedex.composeapp.generated.resources.create_account
 import pokedex.composeapp.generated.resources.create_email_getting_starting
 import pokedex.composeapp.generated.resources.create_email_label
 import pokedex.composeapp.generated.resources.create_email_title

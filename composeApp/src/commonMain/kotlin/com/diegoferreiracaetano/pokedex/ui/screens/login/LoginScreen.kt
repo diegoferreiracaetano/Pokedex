@@ -27,10 +27,10 @@ import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
 import com.diegoferreiracaetano.pokedex.domain.user.User
 import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
-import com.diegoferreiracaetano.pokedex.ui.components.templantes.FeedbackScreen
 import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
+import com.diegoferreiracaetano.pokedex.ui.components.templantes.FeedbackScreen
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
@@ -40,13 +40,11 @@ import org.koin.compose.koinInject
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.action_enter
-import pokedex.composeapp.generated.resources.email_message_validation
 import pokedex.composeapp.generated.resources.forgot_password
 import pokedex.composeapp.generated.resources.login_screen_subtitle
 import pokedex.composeapp.generated.resources.login_screen_title
 import pokedex.composeapp.generated.resources.login_welcome_description
 import pokedex.composeapp.generated.resources.login_welcome_title
-import pokedex.composeapp.generated.resources.password_message_validation
 import pokedex.composeapp.generated.resources.title_email
 import pokedex.composeapp.generated.resources.title_password
 import pokedex.composeapp.generated.resources.welcome
