@@ -98,7 +98,7 @@ fun AppButonSecondary(
         onClick = onClick,
         shape = Shapes.large,
         enabled = enabled,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,

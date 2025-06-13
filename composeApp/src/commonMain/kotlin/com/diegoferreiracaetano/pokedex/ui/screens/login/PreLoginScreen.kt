@@ -5,13 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
 import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.SIGN_UP
@@ -56,24 +54,19 @@ data class AuthScreenData(
     val imageRes: DrawableResource
 )
 
-private object AuthScreenDataProvider {
-
-    operator fun invoke(type: AuthScreenType): AuthScreenData {
-        return when (type) {
-            LOGIN -> AuthScreenData(
-                toolbarTitle = Res.string.action_enter,
-                title = Res.string.login_title,
-                description = Res.string.auth_description,
-                imageRes = Res.drawable.character_lusamine
-            )
-            SIGN_UP -> AuthScreenData(
-                toolbarTitle = Res.string.signup_toolbar_title,
-                title = Res.string.signup_title,
-                description = Res.string.auth_description,
-                imageRes = Res.drawable.character_red
-            )
-        }
-    }
+private fun AuthScreenType.toUI() = when (this) {
+    LOGIN -> AuthScreenData(
+        toolbarTitle = Res.string.action_enter,
+        title = Res.string.login_title,
+        description = Res.string.auth_description,
+        imageRes = Res.drawable.character_lusamine
+    )
+    SIGN_UP -> AuthScreenData(
+        toolbarTitle = Res.string.signup_toolbar_title,
+        title = Res.string.signup_title,
+        description = Res.string.auth_description,
+        imageRes = Res.drawable.character_red
+    )
 }
 
 
@@ -86,16 +79,18 @@ fun PreLoginScreen(
     modifier: Modifier = Modifier
 ) {
 
-    val screenData = AuthScreenDataProvider(type)
+    val screenData = type.toUI()
 
-    AppTopBar(
-        stringResource(screenData.toolbarTitle),
-        onBack,
-        modifier,
+    AppContainer(
+        topBar = AppTopBar(
+            title = stringResource(screenData.toolbarTitle),
+            onBack,
+        ),
+        modifier = modifier
     ) { modifier ->
         PreLoginContent(
             screenData,
-            onAccountCreated, // change to create account
+            onAccountCreated,
             {},
             {},
             modifier
@@ -104,7 +99,7 @@ fun PreLoginScreen(
 }
 
 @Composable
-fun PreLoginContent(
+private fun PreLoginContent(
     authScreenData: AuthScreenData,
     onCreateAccount: () -> Unit,
     onCreateAccountApple: () -> Unit,
@@ -112,9 +107,7 @@ fun PreLoginContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -169,8 +162,6 @@ fun PreLoginContent(
             text = stringResource(Res.string.auth_continue_with_email),
             onClick = onCreateAccount
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

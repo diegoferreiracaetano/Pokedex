@@ -2,26 +2,71 @@ package com.diegoferreiracaetano.pokedex.ui.screens.account
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
-import com.diegoferreiracaetano.pokedex.ui.components.feedback.FeedbackScreen
-import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
-import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.EMAIL
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.NAME
+import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType.PASSWORD
+import com.diegoferreiracaetano.pokedex.domain.user.EmailValidator
+import com.diegoferreiracaetano.pokedex.domain.user.NameValidator
+import com.diegoferreiracaetano.pokedex.domain.user.PasswordValidator
+import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormData
+import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormScreen
+import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import org.jetbrains.compose.resources.stringResource
+import com.diegoferreiracaetano.pokedex.util.getLogger
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.create_account
-import pokedex.composeapp.generated.resources.feedback_description
-import pokedex.composeapp.generated.resources.feedback_title
-import pokedex.composeapp.generated.resources.register_success
+import pokedex.composeapp.generated.resources.create_email_getting_starting
+import pokedex.composeapp.generated.resources.create_email_label
+import pokedex.composeapp.generated.resources.create_email_title
+import pokedex.composeapp.generated.resources.create_name_getting_starting
+import pokedex.composeapp.generated.resources.create_name_label
+import pokedex.composeapp.generated.resources.create_name_title
+import pokedex.composeapp.generated.resources.create_password_getting_starting
+import pokedex.composeapp.generated.resources.create_password_label
+import pokedex.composeapp.generated.resources.create_password_title
+import pokedex.composeapp.generated.resources.signup_toolbar_title
+import pokedex.composeapp.generated.resources.title_email
+import pokedex.composeapp.generated.resources.title_name
+import pokedex.composeapp.generated.resources.title_password
+
+fun CreateAccountStepType.toUI() = when (this) {
+    EMAIL -> FormData(
+        Res.string.signup_toolbar_title,
+        Res.string.create_email_getting_starting,
+        Res.string.create_email_title,
+        Res.string.title_email,
+        Res.string.create_email_label,
+        Res.string.action_continue,
+        TextFieldType.EMAIL,
+        EmailValidator
+    )
+    PASSWORD -> FormData(
+        Res.string.signup_toolbar_title,
+        Res.string.create_password_getting_starting,
+        Res.string.create_password_title,
+        Res.string.title_password,
+        Res.string.create_password_label,
+        Res.string.action_continue,
+        TextFieldType.PASSWORD,
+        PasswordValidator
+    )
+    NAME -> FormData(
+        Res.string.signup_toolbar_title,
+        Res.string.create_name_getting_starting,
+        Res.string.create_name_title,
+        Res.string.title_name,
+        Res.string.create_name_label,
+        Res.string.create_account,
+        TextFieldType.NONE,
+        NameValidator
+    )
+}
 
 @Composable
 fun CreateAccountScreen(
@@ -34,11 +79,10 @@ fun CreateAccountScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+
     CreateAccountScreenContent(
         isLoading = uiState.isLoading,
-        isFinished = uiState.success == true,
-        step = step,
-        onFinish = onFinish,
+        data = step.toUI(),
         onBack = onBack,
         onButtonClick = { value->
             viewModel.saveStep(step, value)
@@ -46,6 +90,7 @@ fun CreateAccountScreen(
                 onNext(nextStep)
             }
         },
+        onFinishButton =  if (uiState.success == true) onFinish else null,
         modifier = modifier
     )
 }
@@ -53,52 +98,23 @@ fun CreateAccountScreen(
 @Composable
 private fun CreateAccountScreenContent(
     isLoading: Boolean,
-    isFinished: Boolean,
-    step: CreateAccountStepType,
-    onFinish: () -> Unit,
+    data: FormData,
     onBack: () -> Unit,
     onButtonClick: (String) -> Unit,
+    onFinishButton: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
 
-    when {
-        isLoading -> {
-            ScreenLoading(modifier)
-        }
-        isFinished -> {
+    getLogger().d("TESTE CreateAccountScreenContent", onFinishButton.toString())
 
-            FeedbackScreen(
-                title = Res.string.feedback_title,
-                description = Res.string.feedback_description,
-                imageRes = Res.drawable.register_success,
-                buttonText = Res.string.action_continue,
-                onClick = onFinish,
-                modifier = modifier
-            )
-        }
-        else -> {
-
-            var fieldValue by remember { mutableStateOf("") }
-            var isError by remember { mutableStateOf(false) }
-
-            AppTopBar(
-                stringResource(Res.string.create_account),
-                onBack = onBack,
-                modifier = modifier
-            ) { padding->
-                isError = step.getValidationError(fieldValue)
-
-                CreateAccountStep(
-                    step = step.toUI(),
-                    value = fieldValue,
-                    onValueChange = { fieldValue = it },
-                    isError = isError,
-                    onButtonClick = { onButtonClick(fieldValue) },
-                    modifier = padding
-                )
-            }
-        }
-    }
+    FormScreen(
+        isLoading = isLoading,
+        data = data,
+        onBack = onBack,
+        onButtonClick = onButtonClick,
+        onFinishButton= onFinishButton,
+        modifier = modifier
+    )
 }
 
 @Preview
@@ -107,11 +123,9 @@ fun CreateAccountScreenPreview() {
     PokedexTheme {
         CreateAccountScreenContent(
             false,
-            false,
-            CreateAccountStepType.EMAIL,
+            EMAIL.toUI(),
             {},
             {},
-            {}
         )
     }
 }

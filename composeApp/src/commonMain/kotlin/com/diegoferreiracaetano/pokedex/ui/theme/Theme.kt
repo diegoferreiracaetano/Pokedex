@@ -4,13 +4,15 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -141,6 +143,8 @@ val LocalExtendedColorScheme = staticCompositionLocalOf<ExtendedColorScheme> {
     error("No ExtendedColorScheme provided")
 }
 
+val LocalSurfaceColor = compositionLocalOf { mutableStateOf(Color.Unspecified) }
+
 @Composable
 fun PokedexTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -150,10 +154,12 @@ fun PokedexTheme(
     val colorScheme = if (darkTheme) darkScheme else lightScheme
     val extendedColors = if (darkTheme) extendedLight else extendedDark
 
-    CompositionLocalProvider(
-        LocalExtendedColorScheme provides extendedColors
-    ) {
+    val surfaceColorState = remember { mutableStateOf(colorScheme.surfaceVariant) }
 
+    CompositionLocalProvider(
+        LocalExtendedColorScheme provides extendedColors,
+        LocalSurfaceColor provides surfaceColorState
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = PokedexTypography(),
@@ -167,8 +173,6 @@ fun PokedexTheme(
             }
         }
     }
-
-
 }
 
 val extendedColors: ExtendedColorScheme

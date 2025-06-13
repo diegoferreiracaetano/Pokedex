@@ -1,4 +1,4 @@
-package com.diegoferreiracaetano.pokedex.ui.components.feedback
+package com.diegoferreiracaetano.pokedex.ui.components.templantes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

@@ -6,16 +6,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -44,9 +37,8 @@ fun SplashScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
 
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .fillMaxSize()
-            .padding(WindowInsets.safeDrawing.asPaddingValues()),
+            .background(colorScheme.surfaceVariant)
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         LaunchedEffect(Unit) {
@@ -66,7 +58,6 @@ fun SplashScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .heightIn(max = 50.dp)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
-
         )
     }
 }

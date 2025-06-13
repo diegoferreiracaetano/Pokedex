@@ -1,14 +1,10 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,8 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.diegoferreiracaetano.pokedex.ui.components.feedback.FeedbackScreen
+import com.diegoferreiracaetano.pokedex.ui.components.templantes.FeedbackScreen
 import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppOtpVerification
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
@@ -99,9 +96,11 @@ private fun SendCodeScreenContent(
         val keyboardController = LocalSoftwareKeyboardController.current
         var otpValue by remember { mutableStateOf("") }
 
-        AppTopBar(
-            stringResource(Res.string.forgot_password_title),
-            onBack = onBack,
+        AppContainer(
+            topBar = AppTopBar(
+                title = stringResource(Res.string.forgot_password_title),
+                onBack,
+            ),
             modifier = modifier
         ) { padding->
 
@@ -111,14 +110,9 @@ private fun SendCodeScreenContent(
             }
 
             Column(
-                modifier = padding
-                    .fillMaxSize()
-                    .background(colorScheme.surface)
-                    .imePadding()
-                    .padding(start = 16.dp, end = 16.dp),
+                modifier = padding.imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.15f))
 
                 Text(
                     text = stringResource(Res.string.send_code_title),
@@ -159,8 +153,6 @@ private fun SendCodeScreenContent(
                         .focusRequester(focusRequester)
 
                 )
-
-                Spacer(modifier = Modifier.weight(0.8f))
             }
         }
     }
@@ -171,7 +163,7 @@ private fun SendCodeScreenContent(
 @Preview
 @Composable
 fun SendCodeScreenContentPreview() {
-    PokedexTheme(true) {
+    PokedexTheme {
         SendCodeScreenContent(
             "diego@gmail.com",
             false,

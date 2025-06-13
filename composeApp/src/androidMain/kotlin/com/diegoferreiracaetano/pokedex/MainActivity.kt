@@ -11,9 +11,7 @@ import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         setTheme(R.style.Theme_Pokedex)
-
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {

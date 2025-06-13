@@ -1,7 +1,7 @@
 package com.diegoferreiracaetano.pokedex.ui.navigation
 
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
 
 sealed class ScreenRouter(val route: String) {
@@ -27,11 +27,9 @@ sealed class ScreenRouter(val route: String) {
 
     object Login : ScreenRouter("login")
 
-    object ChangePassword : ScreenRouter("change_password/{change}") {
-        const val CHANGE_ARG = "change"
-
-        fun routeWithType(type: ChangePasswordType): String {
-            return "change_password/${type.name}"
+    object ValidateEmail : ScreenRouter("validate_email/{validate}") {
+        fun routeWithType(type: ValidateEmailType): String {
+            return "validate_email/${type.name}"
         }
     }
 

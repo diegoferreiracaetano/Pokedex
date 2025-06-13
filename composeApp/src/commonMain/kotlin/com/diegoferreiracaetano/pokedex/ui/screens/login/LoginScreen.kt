@@ -1,13 +1,10 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.SnackbarHostState
@@ -30,8 +27,9 @@ import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
 import com.diegoferreiracaetano.pokedex.domain.user.User
 import com.diegoferreiracaetano.pokedex.domain.user.getValidationError
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
-import com.diegoferreiracaetano.pokedex.ui.components.feedback.FeedbackScreen
+import com.diegoferreiracaetano.pokedex.ui.components.templantes.FeedbackScreen
 import com.diegoferreiracaetano.pokedex.ui.components.loading.ScreenLoading
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.AppTextField
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
@@ -63,6 +61,7 @@ fun LoginScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
 
     LoginScreenContent(
         isLoading = uiState.isLoading,
@@ -117,12 +116,11 @@ private fun LoginScreenContent(
             }
         }
 
-        AppTopBar(
-            stringResource(Res.string.action_enter),
-            onBack = onBack,
-            snackbarHostState = snackbarHostState,
+        AppContainer(
+            topBar = AppTopBar(stringResource(Res.string.action_enter), onBack = onBack),
+            snackBarHostState = snackbarHostState,
             modifier = modifier
-        ) { padding->
+        ) { modifier,->
             isEmailError = CreateAccountStepType.EMAIL.getValidationError(emailValue)
             isPasswordError = CreateAccountStepType.PASSWORD.getValidationError(passwordValue)
 
@@ -137,9 +135,7 @@ private fun LoginScreenContent(
             }
 
             Column(
-                modifier = padding
-                    .imePadding()
-                    .padding(start = 16.dp, end = 16.dp),
+                modifier = modifier.imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.weight(0.15f))
@@ -161,8 +157,7 @@ private fun LoginScreenContent(
                     onValueChange = { emailValue = it },
                     placeholder = Res.string.title_email,
                     isError = isEmailError,
-                    type = TextFieldType.Email,
-                    supportingText = Res.string.email_message_validation,
+                    type = TextFieldType.EMAIL,
                     modifier = Modifier
                         .focusRequester(focusRequester)
                 )
@@ -174,8 +169,7 @@ private fun LoginScreenContent(
                     onValueChange = { passwordValue = it },
                     placeholder = Res.string.title_password,
                     isError = isPasswordError,
-                    type = TextFieldType.Password,
-                    supportingText = Res.string.password_message_validation,
+                    type = TextFieldType.PASSWORD,
                     modifier = Modifier
                 )
 
@@ -205,7 +199,7 @@ private fun LoginScreenContent(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    PokedexTheme(true) {
+    PokedexTheme {
         LoginScreenContent(
             false,
             null,

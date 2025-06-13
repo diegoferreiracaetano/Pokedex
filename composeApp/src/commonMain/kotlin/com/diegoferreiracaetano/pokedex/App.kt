@@ -11,15 +11,22 @@ import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@Preview
 fun App() {
-
     PokedexTheme {
         var showLandingScreen by remember { mutableStateOf(true) }
+
         if (showLandingScreen) {
-            SplashScreen(onTimeout = { showLandingScreen = false })
+            SplashScreen(
+                onTimeout = { showLandingScreen = false },
+            )
         } else {
             AppNavGraph()
         }
     }
+}
+
+@Preview
+@Composable
+fun AppPreview() {
+    App()
 }

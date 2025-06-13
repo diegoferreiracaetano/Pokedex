@@ -36,9 +36,9 @@ import pokedex.composeapp.generated.resources.title_email
 import pokedex.composeapp.generated.resources.title_password
 
 enum class TextFieldType {
-    Email,
-    Password,
-    None
+    EMAIL,
+    PASSWORD,
+    NONE
 }
 @Composable
 fun AppTextField(
@@ -47,7 +47,7 @@ fun AppTextField(
     placeholder: StringResource,
     supportingText: StringResource? = null,
     isError: Boolean = false,
-    type: TextFieldType = TextFieldType.Email,
+    type: TextFieldType = TextFieldType.EMAIL,
     modifier: Modifier = Modifier
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -63,10 +63,10 @@ fun AppTextField(
     val containerColor = colorScheme.surface
 
     val visualTransformation = when (type) {
-        TextFieldType.Password ->
+        TextFieldType.PASSWORD ->
             if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
-        TextFieldType.Email -> VisualTransformation.None
-        TextFieldType.None -> VisualTransformation.None
+        TextFieldType.EMAIL -> VisualTransformation.None
+        TextFieldType.NONE -> VisualTransformation.None
     }
 
     Column(modifier = modifier) {
@@ -83,7 +83,7 @@ fun AppTextField(
             shape = shape,
             visualTransformation = visualTransformation,
             trailingIcon = {
-                if (type == TextFieldType.Password) {
+                if (type == TextFieldType.PASSWORD) {
                     val icon =
                         if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -141,7 +141,7 @@ fun AppTextFieldPreview() {
                 onValueChange = { email = it },
                 placeholder = Res.string.title_email,
                 isError = email.contains("cm"),
-                type = TextFieldType.Email,
+                type = TextFieldType.EMAIL,
                 supportingText = Res.string.email_message_validation
             )
 
@@ -150,7 +150,7 @@ fun AppTextFieldPreview() {
                 onValueChange = { password = it },
                 placeholder = Res.string.title_password,
                 isError = password.length < 6,
-                type = TextFieldType.Password,
+                type = TextFieldType.PASSWORD,
                 supportingText = Res.string.password_message_validation
             )
         }

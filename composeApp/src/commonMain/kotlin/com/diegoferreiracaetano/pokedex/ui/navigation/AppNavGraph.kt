@@ -7,15 +7,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.*
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Login
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ChangePasswordType.*
 import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType
+import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType.FORGOT
 import com.diegoferreiracaetano.pokedex.ui.screens.home.HomeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
@@ -32,7 +39,8 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Onboarding.route
+        startDestination = Onboarding.route,
+        modifier = modifier
     ) {
         composable(Home.route) {
             HomeScreen(modifier = modifier)
@@ -93,16 +101,16 @@ fun AppNavGraph(
                 onFinish = { navController.navigateClearBackStackTo(Home.route) },
                 onBack = { navController.popBackStack() },
                 onChangePassword = {
-                    navController.navigate(ChangePassword.routeWithType(FORGOT))
+                    navController.navigate(ValidateEmail.routeWithType(FORGOT))
                 },
                 modifier = modifier
             )
         }
 
-        composable(ChangePassword.route) { backStackEntry ->
-            val type = backStackEntry.readEnumOrDefault(TYPE_ARG, ChangePasswordType.entries.first())
+        composable(ValidateEmail.route) { backStackEntry ->
+            val type = backStackEntry.readEnumOrDefault(TYPE_ARG, ValidateEmailType.entries.first())
 
-            ChangePasswordScreen(
+            ValidateEmailScreen(
                 type = type,
                 onSendCode = { contact->
                     navController.navigate(SendCode.routeWithContact(contact))
