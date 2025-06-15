@@ -34,7 +34,6 @@ import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType.EM
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType.NONE
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType.PASSWORD
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import com.diegoferreiracaetano.pokedex.util.getLogger
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -82,7 +81,6 @@ fun FormScreen(
             ScreenLoading(modifier)
         }
         onFinishButton != null -> {
-            getLogger().d("TESTE", "onFinishButton")
             FeedbackScreen(
                 title = Res.string.feedback_title,
                 description = Res.string.feedback_description,

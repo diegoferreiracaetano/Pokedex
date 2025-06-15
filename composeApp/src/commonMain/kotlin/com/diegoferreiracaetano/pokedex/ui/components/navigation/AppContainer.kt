@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,7 +61,7 @@ private fun AppScaffoldContent(
         }
     ) { innerPadding ->
         val baseModifier = modifier
-            .fillMaxHeight()
+            .fillMaxSize()
             .background(colorScheme.surface)
             .padding(innerPadding)
             .consumeWindowInsets(innerPadding)

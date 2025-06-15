@@ -70,7 +70,13 @@
     <string name="feedback_title">Sua conta foi criada com Sucesso!</string>
     <string name="feedback_description">Seja bem-vindo, treinador! Estamos animados para acompanhar sua jornada.</string>
 
+    <string name="onboarding_title_1">Todos os Pokémons em um só Lugar</string>
+    <string name="onboarding_desc_1">Acesse uma vasta lista de Pokémon de todas as gerações já feitas pela Nintendo</string>
+    <string name="onboarding_button_1">Continuar</string>
 
+    <string name="onboarding_title_2">Mantenha sua Pokédex atualizada</string>
+    <string name="onboarding_desc_2">Cadastre-se e mantenha seu perfil, pokémon favoritos, configurações e muito mais, salvos no aplicativo, mesmo sem conexão com a internet.</string>
+    <string name="onboarding_button_2">Vamos começar!</string>
 
 
 </resources>

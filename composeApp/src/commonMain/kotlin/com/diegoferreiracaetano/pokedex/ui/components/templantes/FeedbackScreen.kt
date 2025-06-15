@@ -17,6 +17,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
+import com.diegoferreiracaetano.pokedex.ui.components.image.CircularImage
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -36,53 +38,49 @@ fun FeedbackScreen(
     imageRes: DrawableResource,
     buttonText: StringResource,
     onClick: () -> Unit,
-    imageContentDescription: String? = null,
+    imageContentDescription: StringResource? = null,
     modifier: Modifier = Modifier
 ) {
 
-    Column(
-        modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.weight(0.5f))
+    AppContainer(
+        modifier = modifier
+    ) { modifier ->
+        Column(
+            modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        Image(
-            painter = painterResource(imageRes),
-            contentDescription = imageContentDescription,
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .aspectRatio( 1.5f),
-            contentScale = ContentScale.Fit
-        )
+            Spacer(modifier = Modifier.weight(0.1f))
 
-        Spacer(modifier = Modifier.height(48.dp))
+            CircularImage(
+                resource = imageRes,
+                contentDescription = imageContentDescription,
+                modifier = Modifier.weight(0.4f)
+            )
 
-        Text(
-            text = stringResource( title),
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center
-        )
+            Spacer(modifier = Modifier.weight(0.1f))
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource( title),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center
+            )
 
-        Text(
-            text = stringResource(description),
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = stringResource(description),
+                style = MaterialTheme.typography.labelMedium,
+                textAlign = TextAlign.Center
+            )
 
-        AppButton(
-            text = stringResource(buttonText),
-            onClick = onClick
-        )
+            Spacer(modifier = Modifier.height(36.dp))
 
-
-        Spacer(modifier = Modifier.height(8.dp))
-
+            AppButton(
+                text = stringResource(buttonText),
+                onClick = onClick
+            )
+        }
     }
 }
 

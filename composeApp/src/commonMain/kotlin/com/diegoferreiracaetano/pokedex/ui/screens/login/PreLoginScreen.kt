@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
 import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
+import com.diegoferreiracaetano.pokedex.ui.components.image.CircularImage
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
@@ -79,91 +80,75 @@ fun PreLoginScreen(
     modifier: Modifier = Modifier
 ) {
 
-    val screenData = type.toUI()
+    val authScreenData = type.toUI()
 
     AppContainer(
         topBar = AppTopBar(
-            title = stringResource(screenData.toolbarTitle),
+            title = stringResource(authScreenData.toolbarTitle),
             onBack,
         ),
         modifier = modifier
     ) { modifier ->
-        PreLoginContent(
-            screenData,
-            onAccountCreated,
-            {},
-            {},
-            modifier
-        )
+
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            CircularImage(
+                resource = authScreenData.imageRes,
+                contentDescription = authScreenData.title,
+                modifier = Modifier.weight(0.3f)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = stringResource(Res.string.login_title),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = stringResource(authScreenData.description),
+                style = MaterialTheme.typography.labelMedium,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AppButton(
+                image = Res.drawable.apple,
+                text = stringResource(Res.string.auth_continue_with_apple),
+                type = ButtonType.TERTIARY,
+                onClick = {
+                    // todo
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AppButton(
+                image = Res.drawable.google,
+                text = stringResource(Res.string.auth_continue_with_google),
+                type = ButtonType.TERTIARY,
+                onClick = {
+                    // todo
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AppButton(
+                text = stringResource(Res.string.auth_continue_with_email),
+                onClick = onAccountCreated
+            )
+        }
     }
 }
 
-@Composable
-private fun PreLoginContent(
-    authScreenData: AuthScreenData,
-    onCreateAccount: () -> Unit,
-    onCreateAccountApple: () -> Unit,
-    onCreateAccountGoogle: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Spacer(modifier = Modifier.weight(0.1f))
-
-        Image(
-            painter = painterResource(authScreenData.imageRes),
-            contentDescription = stringResource(authScreenData.title),
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .aspectRatio(1f),
-            contentScale = ContentScale.Fit
-        )
-
-        Spacer(modifier = Modifier.weight(0.3f))
-
-        Text(
-            text = stringResource(Res.string.login_title),
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = stringResource(authScreenData.description),
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.weight(0.3f))
-
-        AppButton(
-            image = Res.drawable.apple,
-            text = stringResource(Res.string.auth_continue_with_apple),
-            type = ButtonType.TERTIARY,
-            onClick = onCreateAccountApple
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AppButton(
-            image = Res.drawable.google,
-            text = stringResource(Res.string.auth_continue_with_google),
-            type = ButtonType.TERTIARY,
-            onClick = onCreateAccountGoogle
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AppButton(
-            text = stringResource(Res.string.auth_continue_with_email),
-            onClick = onCreateAccount
-        )
-    }
-}
 
 @Preview
 @Composable

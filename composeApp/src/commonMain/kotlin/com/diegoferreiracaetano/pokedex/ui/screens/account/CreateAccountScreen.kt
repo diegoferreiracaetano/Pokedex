@@ -15,7 +15,6 @@ import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormData
 import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormScreen
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import com.diegoferreiracaetano.pokedex.util.getLogger
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import pokedex.composeapp.generated.resources.Res
@@ -79,7 +78,6 @@ fun CreateAccountScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
     CreateAccountScreenContent(
         isLoading = uiState.isLoading,
         data = step.toUI(),
@@ -104,8 +102,6 @@ private fun CreateAccountScreenContent(
     onFinishButton: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
-
-    getLogger().d("TESTE CreateAccountScreenContent", onFinishButton.toString())
 
     FormScreen(
         isLoading = isLoading,

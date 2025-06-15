@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
 import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
+import com.diegoferreiracaetano.pokedex.ui.components.image.CircularImage
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.resources.painterResource
@@ -44,7 +47,7 @@ fun OnboardingFinishScreen(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(0.1f))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
                 text = stringResource(Res.string.skip),
@@ -55,14 +58,16 @@ fun OnboardingFinishScreen(
                 textAlign = TextAlign.End
             )
 
-            Image(
-                painter = painterResource(Res.drawable.image3),
-                contentDescription = stringResource(Res.string.onboarding_image_content_description),
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Crop
+            Spacer(modifier = Modifier.weight(0.15f))
+
+            CircularImage(
+                resource = Res.drawable.image3,
+                contentDescription = Res.string.onboarding_image_content_description,
+                modifier = Modifier.weight(0.4f)
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = stringResource(Res.string.onboarding_title),
@@ -78,12 +83,13 @@ fun OnboardingFinishScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(24.dp))
 
             AppButton(
                 text = stringResource(Res.string.create_account),
                 onClick = onCreateAccount
             )
+
 
             Spacer(modifier = Modifier.height(8.dp))
 
