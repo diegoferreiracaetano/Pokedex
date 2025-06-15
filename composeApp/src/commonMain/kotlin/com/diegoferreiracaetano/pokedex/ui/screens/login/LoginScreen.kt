@@ -43,11 +43,11 @@ import pokedex.composeapp.generated.resources.action_enter
 import pokedex.composeapp.generated.resources.forgot_password
 import pokedex.composeapp.generated.resources.login_screen_subtitle
 import pokedex.composeapp.generated.resources.login_screen_title
-import pokedex.composeapp.generated.resources.login_welcome_description
-import pokedex.composeapp.generated.resources.login_welcome_title
+import pokedex.composeapp.generated.resources.login_image5_description
+import pokedex.composeapp.generated.resources.login_image5_title
 import pokedex.composeapp.generated.resources.title_email
 import pokedex.composeapp.generated.resources.title_password
-import pokedex.composeapp.generated.resources.welcome
+import pokedex.composeapp.generated.resources.image5
 
 @Composable
 fun LoginScreen(
@@ -92,9 +92,9 @@ private fun LoginScreenContent(
     }
     else if (user != null) {
         FeedbackScreen(
-            title = Res.string.login_welcome_title,
-            description = Res.string.login_welcome_description,
-            imageRes = Res.drawable.welcome,
+            title = Res.string.login_image5_title,
+            description = Res.string.login_image5_description,
+            imageRes = Res.drawable.image5,
             buttonText = Res.string.action_continue,
             onClick = onFinish,
             modifier = modifier

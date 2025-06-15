@@ -77,7 +77,7 @@ fun OnboardingScreen(
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Spacer(modifier = Modifier.weight(0.2f))
+                        Spacer(modifier = Modifier.weight(0.1f))
 
                         CircularImage(
                             resource =pageData.imageRes,

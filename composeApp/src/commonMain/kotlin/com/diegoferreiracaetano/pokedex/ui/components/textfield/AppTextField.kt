@@ -45,9 +45,10 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: StringResource,
+    title: StringResource? = null,
     supportingText: StringResource? = null,
     isError: Boolean = false,
-    type: TextFieldType = TextFieldType.EMAIL,
+    type: TextFieldType = TextFieldType.NONE,
     modifier: Modifier = Modifier
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -70,6 +71,17 @@ fun AppTextField(
     }
 
     Column(modifier = modifier) {
+        if (title != null) {
+            Text(
+                text = stringResource(title),
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, bottom = 8.dp)
+            )
+        }
+
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -138,6 +150,7 @@ fun AppTextFieldPreview() {
         ) {
             AppTextField(
                 value = email,
+                title = Res.string.title_email,
                 onValueChange = { email = it },
                 placeholder = Res.string.title_email,
                 isError = email.contains("cm"),

@@ -44,7 +44,7 @@ import pokedex.composeapp.generated.resources.create_email_label
 import pokedex.composeapp.generated.resources.create_email_title
 import pokedex.composeapp.generated.resources.feedback_description
 import pokedex.composeapp.generated.resources.feedback_title
-import pokedex.composeapp.generated.resources.register_success
+import pokedex.composeapp.generated.resources.image4
 import pokedex.composeapp.generated.resources.signup_toolbar_title
 import pokedex.composeapp.generated.resources.title_email
 
@@ -84,14 +84,13 @@ fun FormScreen(
             FeedbackScreen(
                 title = Res.string.feedback_title,
                 description = Res.string.feedback_description,
-                imageRes = Res.drawable.register_success,
+                imageRes = Res.drawable.image4,
                 buttonText = Res.string.action_continue,
                 onClick = onFinishButton,
                 modifier = modifier
             )
         }
         else -> {
-
 
             val snackbarHostState = remember { SnackbarHostState() }
             var fieldValue by remember { mutableStateOf("") }

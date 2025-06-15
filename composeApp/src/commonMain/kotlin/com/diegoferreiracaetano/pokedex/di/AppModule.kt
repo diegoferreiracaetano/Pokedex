@@ -4,6 +4,7 @@ import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountViewMode
 import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginViewModel
+import com.diegoferreiracaetano.pokedex.ui.screens.user.ChangeUserNameViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -18,4 +19,5 @@ val appModule = module {
     factory { LoginViewModel(get()) }
     factory { ValidateEmailViewModel(get()) }
     factory { SendCodeViewModel(get()) }
+    factory { ChangeUserNameViewModel() }
 }

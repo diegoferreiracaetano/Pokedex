@@ -1,12 +1,14 @@
 package com.diegoferreiracaetano.pokedex.ui.components.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -48,7 +50,8 @@ private fun AppScaffoldContent(
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { AppSnackbarHost(hostState = snackBarHostState) },
         topBar = {
             topBar?.let {
@@ -61,6 +64,7 @@ private fun AppScaffoldContent(
         }
     ) { innerPadding ->
         val baseModifier = modifier
+            .widthIn(min = 150.dp, max = 600.dp)
             .fillMaxSize()
             .background(colorScheme.surface)
             .padding(innerPadding)
@@ -68,7 +72,14 @@ private fun AppScaffoldContent(
             .systemBarsPadding()
             .padding(16.dp)
 
-        content(baseModifier)
+        Box(
+            modifier = Modifier
+                .background(colorScheme.surface)
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            content(baseModifier)
+        }
     }
 }
 

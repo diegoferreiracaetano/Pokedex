@@ -39,7 +39,7 @@ import pokedex.composeapp.generated.resources.password_reset_description
 import pokedex.composeapp.generated.resources.password_reset_title
 import pokedex.composeapp.generated.resources.send_code_subtitle
 import pokedex.composeapp.generated.resources.send_code_title
-import pokedex.composeapp.generated.resources.welcome
+import pokedex.composeapp.generated.resources.image5
 
 @Composable
 fun SendCodeScreen(
@@ -84,7 +84,7 @@ private fun SendCodeScreenContent(
         FeedbackScreen(
             title = Res.string.password_reset_title,
             description = Res.string.password_reset_description,
-            imageRes = Res.drawable.welcome,
+            imageRes = Res.drawable.image5,
             buttonText = Res.string.action_continue,
             onClick = onFinish,
             modifier = modifier

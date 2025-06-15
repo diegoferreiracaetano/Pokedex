@@ -58,7 +58,7 @@ fun OnboardingFinishScreen(
                 textAlign = TextAlign.End
             )
 
-            Spacer(modifier = Modifier.weight(0.15f))
+            Spacer(modifier = Modifier.weight(0.05f))
 
             CircularImage(
                 resource = Res.drawable.image3,

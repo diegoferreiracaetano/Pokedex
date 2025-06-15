@@ -36,8 +36,8 @@ import pokedex.composeapp.generated.resources.auth_continue_with_apple
 import pokedex.composeapp.generated.resources.auth_continue_with_email
 import pokedex.composeapp.generated.resources.auth_continue_with_google
 import pokedex.composeapp.generated.resources.auth_description
-import pokedex.composeapp.generated.resources.character_lusamine
-import pokedex.composeapp.generated.resources.character_red
+import pokedex.composeapp.generated.resources.image6
+import pokedex.composeapp.generated.resources.image7
 import pokedex.composeapp.generated.resources.google
 import pokedex.composeapp.generated.resources.login_title
 import pokedex.composeapp.generated.resources.signup_title
@@ -60,13 +60,13 @@ private fun AuthScreenType.toUI() = when (this) {
         toolbarTitle = Res.string.action_enter,
         title = Res.string.login_title,
         description = Res.string.auth_description,
-        imageRes = Res.drawable.character_lusamine
+        imageRes = Res.drawable.image6
     )
     SIGN_UP -> AuthScreenData(
         toolbarTitle = Res.string.signup_toolbar_title,
         title = Res.string.signup_title,
         description = Res.string.auth_description,
-        imageRes = Res.drawable.character_red
+        imageRes = Res.drawable.image7
     )
 }
 

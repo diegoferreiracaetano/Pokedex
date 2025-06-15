@@ -29,7 +29,7 @@ import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_continue
 import pokedex.composeapp.generated.resources.feedback_description
 import pokedex.composeapp.generated.resources.feedback_title
-import pokedex.composeapp.generated.resources.register_success
+import pokedex.composeapp.generated.resources.image4
 
 @Composable
 fun FeedbackScreen(
@@ -49,7 +49,6 @@ fun FeedbackScreen(
             modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(modifier = Modifier.weight(0.1f))
 
             CircularImage(
@@ -58,7 +57,7 @@ fun FeedbackScreen(
                 modifier = Modifier.weight(0.4f)
             )
 
-            Spacer(modifier = Modifier.weight(0.1f))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = stringResource( title),
@@ -66,7 +65,7 @@ fun FeedbackScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = stringResource(description),
@@ -74,7 +73,7 @@ fun FeedbackScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             AppButton(
                 text = stringResource(buttonText),
@@ -91,7 +90,7 @@ fun FeedbackScreenPreView() {
         FeedbackScreen(
             title = Res.string.feedback_title,
             description = Res.string.feedback_description,
-            imageRes = Res.drawable.register_success,
+            imageRes = Res.drawable.image4,
             buttonText = Res.string.action_continue,
             onClick =  {}
         )
