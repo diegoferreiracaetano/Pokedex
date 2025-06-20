@@ -45,7 +45,7 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: StringResource,
-    title: StringResource? = null,
+    label: StringResource? = null,
     supportingText: StringResource? = null,
     isError: Boolean = false,
     type: TextFieldType = TextFieldType.NONE,
@@ -71,9 +71,9 @@ fun AppTextField(
     }
 
     Column(modifier = modifier) {
-        if (title != null) {
+        if (label != null) {
             Text(
-                text = stringResource(title),
+                text = stringResource(label),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
@@ -129,7 +129,7 @@ fun AppTextField(
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 12.dp, top = 4.dp)
+                    .padding(start = 12.dp, top = 8.dp)
             )
         }
     }
@@ -150,7 +150,7 @@ fun AppTextFieldPreview() {
         ) {
             AppTextField(
                 value = email,
-                title = Res.string.title_email,
+                label = Res.string.title_email,
                 onValueChange = { email = it },
                 placeholder = Res.string.title_email,
                 isError = email.contains("cm"),

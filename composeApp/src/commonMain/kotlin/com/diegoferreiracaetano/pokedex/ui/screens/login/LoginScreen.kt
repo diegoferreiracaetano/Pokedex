@@ -59,8 +59,7 @@ fun LoginScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-
+    
     LoginScreenContent(
         isLoading = uiState.isLoading,
         user = uiState.success,

@@ -14,6 +14,11 @@ import org.jetbrains.compose.resources.stringResource
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.action_back
 
+class AppTopBar(
+    val title: String,
+    val onBack: () -> Unit,
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(

@@ -107,8 +107,8 @@ private fun CreateAccountScreenContent(
         isLoading = isLoading,
         data = data,
         onBack = onBack,
-        onButtonClick = onButtonClick,
-        onFinishButton= onFinishButton,
+        onClick = onButtonClick,
+        onFinish= onFinishButton,
         modifier = modifier
     )
 }

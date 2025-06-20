@@ -20,20 +20,26 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AppSwitcher(
-    isChecked: Boolean = false
+    isChecked: Boolean = false,
+    onCheckedChange: (Boolean) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     var switchChecked by remember { mutableStateOf(isChecked) }
 
     val customSwitchColors = SwitchDefaults.colors(
-        checkedThumbColor = MaterialTheme.colorScheme.primary,
-        checkedTrackColor = MaterialTheme.colorScheme.secondary,
-        uncheckedThumbColor = White,
+        checkedThumbColor = MaterialTheme.colorScheme.background,
+        checkedTrackColor = MaterialTheme.colorScheme.primary,
+        uncheckedThumbColor = MaterialTheme.colorScheme.background,
         uncheckedTrackColor = GrayDisabledBackground,
     )
 
     Switch(
+        modifier = modifier,
         checked = switchChecked,
-        onCheckedChange = { switchChecked = it },
+        onCheckedChange = {
+            switchChecked = it
+            onCheckedChange(switchChecked)
+        },
         colors = customSwitchColors
     )
 }

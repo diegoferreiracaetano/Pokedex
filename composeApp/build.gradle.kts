@@ -59,7 +59,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation("androidx.core:core-splashscreen:1.0.1")
+            implementation(libs.androidx.core.splashscreen)
 
         }
         commonMain.dependencies {
@@ -70,11 +70,11 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta02")
+            implementation(libs.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
-            implementation("io.insert-koin:koin-compose:4.1.0")
+            implementation(libs.koin.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

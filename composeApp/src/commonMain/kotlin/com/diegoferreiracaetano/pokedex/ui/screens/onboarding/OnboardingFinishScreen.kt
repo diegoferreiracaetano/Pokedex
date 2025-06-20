@@ -1,11 +1,8 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.onboarding
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -13,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.diegoferreiracaetano.pokedex.ui.components.button.AppButton
@@ -21,7 +17,6 @@ import com.diegoferreiracaetano.pokedex.ui.components.button.ButtonType
 import com.diegoferreiracaetano.pokedex.ui.components.image.CircularImage
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res

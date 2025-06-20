@@ -107,7 +107,7 @@ fun ChangeUserNameContent(
 
             AppTextField(
                 value = nameValue,
-                title = Res.string.title_name_user,
+                label = Res.string.title_name_user,
                 onValueChange = { nameValue = it },
                 placeholder = Res.string.title_name_user,
                 isError = isNameError,
@@ -119,7 +119,7 @@ fun ChangeUserNameContent(
 
             AppTextField(
                 value = fullNameValue,
-                title = Res.string.title_full_name_user,
+                label = Res.string.title_full_name_user,
                 onValueChange = { fullNameValue = it },
                 placeholder = Res.string.title_full_name_user,
                 modifier = Modifier

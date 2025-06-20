@@ -1,17 +1,32 @@
 <resources>
+
+    <string name="app_name">Pokédex</string>
+    "
     <string name="action_back">Voltar</string>
     <string name="action_continue">Continuar</string>
     <string name="action_enter">Entrar</string>
     <string name="action_update">Atualizar</string>
+    <string name="action_enter_or_register">Entre ou Cadastre-se</string>
 
     <string name="title_email">E-mail</string>
     <string name="title_password">Senha</string>
     <string name="title_name">Nome</string>
     <string name="title_change_name">Trocar nome</string>
+    <string name="title_change_password">Trocar senha</string>
 
     <string name="title_name_user">Nome de usuário</string>
     <string name="title_full_name_user">Nome completo (opcional)</string>
 
+    <string name="confirm_password_subtitle">Quer mudar sua senha?</string>
+    <string name="confirm_password_description">Digite sua senha atual</string>
+    <string name="confirm_password_label">Senha atual</string>
+    <string name="confirm_password_support">Precisamos da sua senha atual para validar a alteração.</string>
+
+
+    <string name="change_password_subtitle">Tudo certo!</string>
+    <string name="change_password_description">Digite sua nova senha</string>
+    <string name="change_password_label">Nova senha</string>
+    <string name="change_password_support">Lembre-se bem dessa senha.</string>
 
    <string name="forgot_password">Esqueceu sua senha?</string>
    <string name="forgot_password_title">Esqueci minha senha</string>
@@ -84,5 +99,42 @@
     <string name="onboarding_desc_2">Cadastre-se e mantenha seu perfil, pokémon favoritos, configurações e muito mais, salvos no aplicativo, mesmo sem conexão com a internet.</string>
     <string name="onboarding_button_2">Vamos começar!</string>
 
+
+    <string name="profile_description">Mantenha sua Pokédex atualizada e participe desse mundo.</string>
+
+    <string name="section_pokedex">Pokédex</string>
+    <string name="mega_evolutions">Mega evoluções</string>
+    <string name="mega_evolutions_description">Habilita a exibição de mega Evoluções.</string>
+    <string name="other_forms">Outras formas</string>
+    <string name="other_forms_description">Habilita a exibição de formas alternativas de pokémon.</string>
+
+    <string name="section_notifications">Notificações</string>
+    <string name="pokedex_updates">Atualizações na pokédex</string>
+    <string name="pokedex_updates_description">Novos Pokémons, habilidades, informações, etc.</string>
+    <string name="world_news">Mundo Pokémon</string>
+    <string name="world_news_description">Acontecimentos e informações do mundo de pokémon.</string>
+
+    <string name="section_language">Idioma</string>
+    <string name="language_ui">Idioma da interface</string>
+    <string name="language_ui_value">Português (PT-BR)</string>
+    <string name="language_game_info">Idioma de informações em jogo</string>
+    <string name="language_game_info_value">English (US)</string>
+
+    <string name="section_general">Geral</string>
+    <string name="row_version">Versão</string>
+    <string name="row_version_value">0.8.12</string>
+    <string name="link_terms">Termos e condições</string>
+    <string name="link_terms_description">Tudo o que você precisa saber.</string>
+    <string name="link_help">Central de ajuda</string>
+    <string name="link_help_description">Precisa de ajuda? Fale conosco.</string>
+    <string name="link_about">Sobre</string>
+    <string name="link_about_description">Saiba mais sobre o app.</string>
+
+    <string name="section_others">Outros</string>
+    <string name="logout">Sair</string>
+    <string name="logged_in_as">Você entrou como %1$s</string>
+
+    <string name="account_info_title">Informações da conta</string>
+    <string name="account_password_hidden">●●●●●●●●●●●●</string>
 
 </resources>

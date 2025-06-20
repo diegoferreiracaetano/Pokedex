@@ -56,7 +56,8 @@ data class FormData(
     val supportingTextRes: StringResource,
     val buttonTextRes: StringResource,
     val fieldType: TextFieldType,
-    val validator: CreateAccountValidator
+    val validator: CreateAccountValidator,
+    val label: StringResource? = null
 )
 
 private fun TextFieldType.getValidationError(value: String) = when(this) {
@@ -71,8 +72,8 @@ fun FormScreen(
     isLoading: Boolean = false,
     error: String? = null,
     onBack: () -> Unit,
-    onButtonClick: (String) -> Unit,
-    onFinishButton: (() -> Unit)? = null,
+    onClick: (String) -> Unit,
+    onFinish: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
 
@@ -80,13 +81,13 @@ fun FormScreen(
         isLoading -> {
             ScreenLoading(modifier)
         }
-        onFinishButton != null -> {
+        onFinish != null -> {
             FeedbackScreen(
                 title = Res.string.feedback_title,
                 description = Res.string.feedback_description,
                 imageRes = Res.drawable.image4,
                 buttonText = Res.string.action_continue,
-                onClick = onFinishButton,
+                onClick = onFinish,
                 modifier = modifier
             )
         }
@@ -129,7 +130,6 @@ fun FormScreen(
 
                     Spacer(modifier = Modifier.weight(0.1F))
 
-
                     Text(
                         text = stringResource(data.titleRes),
                         style = MaterialTheme.typography.titleLarge,
@@ -140,9 +140,10 @@ fun FormScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
 
                     AppTextField(
+                        label = data.label,
                         value = fieldValue,
                         onValueChange = { fieldValue = it },
                         placeholder = data.placeholderRes,
@@ -159,7 +160,7 @@ fun FormScreen(
                     AppButton(
                         text = stringResource(data.buttonTextRes),
                         enabled = fieldValue.isNotEmpty() && !isError,
-                        onClick = { onButtonClick(fieldValue) }
+                        onClick = { onClick(fieldValue) }
                     )
                 }
             }

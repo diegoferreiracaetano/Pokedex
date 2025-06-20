@@ -2,8 +2,7 @@ package com.diegoferreiracaetano.pokedex.ui.components.navigation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CatchingPokemon
@@ -19,68 +18,100 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter
+import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-enum class TabItem(
+data class AppBottomNavigation(
+    val selectedRoute: String = tabList.first().route,
+    val items: List<AppNavigationTab> = tabList,
+    val onTabSelected: (String) -> Unit,
+)
+
+data class AppNavigationTab(
+    val route: String,
     val label: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
-) {
-    Pokedex("Pokédex", Icons.Filled.CatchingPokemon, Icons.Outlined.CatchingPokemon),
-    Regions("Regiões", Icons.Filled.Place, Icons.Outlined.Place),
-    Favorites("Favoritos", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
-    Account("Conta", Icons.Filled.AccountCircle, Icons.Outlined.AccountCircle)
-}
+)
+
 
 @Composable
-fun BottomNavigationBar(selectedTab: TabItem, onTabSelected: (TabItem) -> Unit) {
-    NavigationBar {
-        TabItem.entries.forEach { tab ->
-            NavigationBarItem(
-                selected = selectedTab == tab,
-                onClick = { onTabSelected(tab) },
-                icon = {
-                    Icon(
-                        imageVector = if (selectedTab == tab) tab.selectedIcon else tab.unselectedIcon,
-                        contentDescription = tab.label,
-                        tint = if (selectedTab == tab) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                },
-                label = {
-                    Text(
-                        text = tab.label,
-                        color = if (selectedTab == tab) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            )
+fun AppBottomNavigationBar(
+    items: List<AppNavigationTab>,
+    selectedRoute: String,
+    onTabSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        NavigationBar {
+            items.forEach { tab ->
+                val isSelected = tab.route == selectedRoute
+                NavigationBarItem(
+                    selected = isSelected,
+                    onClick = {
+                        if (!isSelected) {
+                            onTabSelected(tab.route)
+                        }
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = if (isSelected) tab.selectedIcon else tab.unselectedIcon,
+                            contentDescription = tab.label,
+                            tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = tab.label,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                )
+            }
         }
     }
 }
 
+enum class TabItem(
+    val route: String,
+    val label: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
+) {
+    HOME(ScreenRouter.Home.route, "Pokédex", Icons.Filled.CatchingPokemon, Icons.Outlined.CatchingPokemon),
+    Regions(ScreenRouter.Regions.route, "Regiões", Icons.Filled.Place, Icons.Outlined.Place),
+    Favorites(ScreenRouter.Favorites.route, "Favoritos", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
+    Account(ScreenRouter.Profile.route, "Conta", Icons.Filled.AccountCircle, Icons.Outlined.AccountCircle)
+}
+
+val tabList = TabItem.entries.map {
+    AppNavigationTab(
+        route = it.route,
+        label = it.label,
+        selectedIcon = it.selectedIcon,
+        unselectedIcon = it.unselectedIcon
+    )
+}
 
 @Preview()
 @Composable
 fun BottomNavigationBarPreview() {
-    var selected by remember { mutableStateOf(TabItem.Pokedex) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 16.dp),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        BottomNavigationBar(
-            selectedTab = selected,
-            onTabSelected = { selected = it }
+    PokedexTheme {
+        AppBottomNavigationBar(
+            items = tabList,
+            selectedRoute = TabItem.HOME.route,
+            onTabSelected = { selectedTab ->
+                println("Selecionado: ${selectedTab}")
+            }
         )
     }
 }

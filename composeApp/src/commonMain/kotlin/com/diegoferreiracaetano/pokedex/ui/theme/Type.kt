@@ -73,7 +73,7 @@ fun PokedexTypography() = Typography(
     titleLarge = TextStyle(
         fontFamily = PoppinsFontFamily(),
         fontWeight = FontWeight.SemiBold,
-        fontSize = 26.sp,
+        fontSize = 20.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.2.sp
     ),

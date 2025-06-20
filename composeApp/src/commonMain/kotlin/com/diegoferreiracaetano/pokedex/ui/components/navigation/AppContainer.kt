@@ -35,16 +35,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.login_screen_title
 
-class AppTopBar(
-   val title: String,
-   val onBack: () -> Unit,
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppScaffoldContent(
     modifier: Modifier = Modifier,
     topBar: AppTopBar? = null,
+    bottomBar: AppBottomNavigation? = null,
     snackBarHostState: SnackbarHostState,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     content: @Composable (Modifier) -> Unit
@@ -59,6 +56,15 @@ private fun AppScaffoldContent(
                     title = it.title,
                     onBack = it.onBack,
                     scrollBehavior = scrollBehavior
+                )
+            }
+        },
+        bottomBar =  {
+            bottomBar?.let {
+                AppBottomNavigationBar(
+                    items = it.items,
+                    onTabSelected = it.onTabSelected,
+                    selectedRoute = it.selectedRoute
                 )
             }
         }
@@ -89,12 +95,14 @@ private fun AppScaffoldContent(
 fun AppContainer(
     modifier: Modifier = Modifier,
     topBar: AppTopBar? = null,
+    bottomBar: AppBottomNavigation? = null,
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable (Modifier) -> Unit
 ) {
     AppScaffoldContent(
         modifier = modifier,
         topBar = topBar,
+        bottomBar = bottomBar,
         snackBarHostState = snackBarHostState,
         content = content
     )
@@ -106,6 +114,7 @@ fun <T> AppContainer(
     uiState: UiState<T>?,
     modifier: Modifier = Modifier,
     topBar: AppTopBar? = null,
+    bottomBar: AppBottomNavigation? = null,
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onLoading: @Composable () -> Unit = { AppLoading() },
     content: @Composable (modifier: Modifier, data: T) -> Unit
@@ -118,6 +127,7 @@ fun <T> AppContainer(
     AppScaffoldContent(
         modifier = modifier,
         topBar = topBar,
+        bottomBar = bottomBar,
         snackBarHostState = snackBarHostState
     ) { baseModifier ->
         when {

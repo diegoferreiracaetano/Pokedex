@@ -1,8 +1,11 @@
 package com.diegoferreiracaetano.pokedex.ui.navigation
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.savedstate.read
 
 inline fun <reified T : Enum<T>> NavBackStackEntry.readEnumOrDefault(
@@ -45,4 +48,10 @@ fun NavController.navigateClearBackStackTo(route: String) {
         popUpTo(0) { inclusive = true } // Limpa toda a stack
         launchSingleTop = true
     }
+}
+
+@Composable
+fun NavController.currentRoute(): String? {
+    val navBackStackEntry by this.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
 }

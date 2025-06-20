@@ -1,4 +1,4 @@
-package com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword
+package com.diegoferreiracaetano.pokedex.ui.screens.otp
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

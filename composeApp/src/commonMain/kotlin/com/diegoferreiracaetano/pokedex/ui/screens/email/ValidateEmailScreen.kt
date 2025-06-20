@@ -1,4 +1,4 @@
-package com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword
+package com.diegoferreiracaetano.pokedex.ui.screens.email
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,8 +9,6 @@ import com.diegoferreiracaetano.pokedex.domain.user.EmailValidator
 import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormData
 import com.diegoferreiracaetano.pokedex.ui.components.templantes.FormScreen
 import com.diegoferreiracaetano.pokedex.ui.components.textfield.TextFieldType
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType.FORGOT
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType.UPDATE
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -31,7 +29,7 @@ enum class ValidateEmailType {
 }
 
 fun ValidateEmailType.toUI() = when (this) {
-    FORGOT -> FormData(
+    ValidateEmailType.FORGOT -> FormData(
         Res.string.forgot_password_title,
         Res.string.forgot_password_title,
         Res.string.forgot_password_subtitle,
@@ -41,7 +39,7 @@ fun ValidateEmailType.toUI() = when (this) {
         TextFieldType.EMAIL,
         EmailValidator
     )
-    UPDATE -> FormData(
+    ValidateEmailType.UPDATE -> FormData(
         Res.string.update_password_title,
         Res.string.create_email_title,
         Res.string.update_password_subtitle,
@@ -97,7 +95,7 @@ private fun ValidateEmailContent(
         data = type.toUI(),
         isLoading = isLoading,
         error = error,
-        onButtonClick = { email->
+        onClick = { email->
             onRecoveryPassword(email)
         },
         onBack = onBack,
@@ -110,7 +108,7 @@ private fun ValidateEmailContent(
 fun ValidateEmailScreenPreview() {
     PokedexTheme {
         ValidateEmailContent(
-            UPDATE,
+            ValidateEmailType.UPDATE,
             false,
             null,
             {},

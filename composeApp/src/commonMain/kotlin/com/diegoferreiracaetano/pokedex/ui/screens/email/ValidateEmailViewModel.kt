@@ -1,4 +1,4 @@
-package com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword
+package com.diegoferreiracaetano.pokedex.ui.screens.email
 
 import androidx.lifecycle.ViewModel
 import com.diegoferreiracaetano.pokedex.domain.user.SendCodeUseCase

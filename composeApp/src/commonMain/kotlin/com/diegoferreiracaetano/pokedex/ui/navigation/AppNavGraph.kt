@@ -1,28 +1,35 @@
 package com.diegoferreiracaetano.pokedex.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
+import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppNavigationTab
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.EditName
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.EditPassword
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Login
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Profile
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailScreen
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailType.FORGOT
+import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType
+import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType.FORGOT
+import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType.UPDATE
+import com.diegoferreiracaetano.pokedex.ui.screens.favorites.FavoritesScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.home.HomeScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType
 import com.diegoferreiracaetano.pokedex.ui.screens.login.AuthScreenType.LOGIN
@@ -31,6 +38,13 @@ import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.login.PreLoginScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingFinishScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.onboarding.OnboardingScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.otp.SendCodeScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.password.ChangePasswordScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.profile.ProfileScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.regions.RegionsScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.user.ChangeUserNameScreen
+import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AppNavGraph(
@@ -43,7 +57,12 @@ fun AppNavGraph(
         modifier = modifier
     ) {
         composable(Home.route) {
-            HomeScreen(modifier = modifier)
+            HomeScreen(
+                onTabSelected = { route->
+                    navController.navigateToRoute(route)
+                },
+                modifier = modifier
+            )
         }
 
         composable( Onboarding.route) {
@@ -129,5 +148,74 @@ fun AppNavGraph(
                 modifier = modifier
             )
         }
+
+        composable(Profile.route) {
+
+            ProfileScreen(
+                isLoggedIn = false,
+                showSuccess = false,
+                onLoginClick = {
+                    navController.navigate(PreLogin.routeWithType(LOGIN))
+                },
+                onNameClick = {
+                    navController.navigate(EditName.route)
+                },
+                onEmailClick = {
+                    navController.navigate(ValidateEmail.routeWithType(UPDATE))
+                },
+                onPasswordClick = {
+                    navController.navigate(EditPassword.route)
+                },
+                onTabSelected = { route->
+                    navController.navigate(route)
+                },
+                onBack = {
+                    navController.popBackStack()
+                },
+                modifier = modifier
+            )
+        }
+
+        composable(EditName.route) {
+            ChangeUserNameScreen(
+                onBack = { navController.popBackStack() },
+                onFinish = { navController.navigateClearBackStackTo(Profile.route) },
+                modifier = modifier
+            )
+        }
+
+        composable(EditPassword.route) {
+            ChangePasswordScreen(
+                onBack = { navController.popBackStack() },
+                onFinish = { navController.navigateClearBackStackTo(Profile.route) },
+                modifier = modifier
+            )
+        }
+
+        composable(ScreenRouter.Regions.route) {
+            RegionsScreen(
+                onTabSelected = { route->
+                    navController.navigate(route)
+                },
+                modifier
+            )
+        }
+
+        composable(ScreenRouter.Favorites.route) {
+            FavoritesScreen(
+                onTabSelected = { route->
+                    navController.navigate(route)
+                },
+                modifier
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AppNavGraphPreview() {
+    PokedexTheme {
+        AppNavGraph()
     }
 }

@@ -1,8 +1,8 @@
 package com.diegoferreiracaetano.pokedex.di
 
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountViewModel
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.ValidateEmailViewModel
-import com.diegoferreiracaetano.pokedex.ui.screens.forgotPassword.SendCodeViewModel
+import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailViewModel
+import com.diegoferreiracaetano.pokedex.ui.screens.otp.SendCodeViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.user.ChangeUserNameViewModel
 import org.koin.core.context.startKoin
