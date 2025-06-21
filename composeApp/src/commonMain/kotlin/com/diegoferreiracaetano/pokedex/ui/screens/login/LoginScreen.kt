@@ -62,7 +62,7 @@ fun LoginScreen(
     
     LoginScreenContent(
         isLoading = uiState.isLoading,
-        user = uiState.success,
+        isLogger = !uiState.success.isNullOrEmpty(),
         error = uiState.error,
         onLogin = { email, password->
             viewModel.login(email, password)
@@ -77,7 +77,7 @@ fun LoginScreen(
 @Composable
 private fun LoginScreenContent(
     isLoading: Boolean,
-    user: User?,
+    isLogger: Boolean,
     error: String?,
     onLogin: (String, String) -> Unit,
     onFinish: () -> Unit,
@@ -89,7 +89,7 @@ private fun LoginScreenContent(
     if (isLoading) {
         ScreenLoading(modifier, true)
     }
-    else if (user != null) {
+    else if (isLogger) {
         FeedbackScreen(
             title = Res.string.login_image5_title,
             description = Res.string.login_image5_description,
@@ -199,7 +199,7 @@ fun LoginScreenPreview() {
     PokedexTheme {
         LoginScreenContent(
             false,
-            null,
+            false,
             null,
             {_, _->},
             {},

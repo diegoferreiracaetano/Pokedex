@@ -35,6 +35,7 @@ fun SplashScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
     val currentOnTimeout by rememberUpdatedState(onTimeout)
     val density = LocalDensity.current
 
+    
     Box(
         modifier = modifier
             .background(colorScheme.surfaceVariant)

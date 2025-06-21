@@ -33,6 +33,8 @@ sealed class ScreenRouter(val route: String) {
     object Login : ScreenRouter("login")
 
     object ValidateEmail : ScreenRouter("validate_email/{validate}") {
+        const val VALIDATE_ARG = "validate"
+
         fun routeWithType(type: ValidateEmailType): String {
             return "validate_email/${type.name}"
         }

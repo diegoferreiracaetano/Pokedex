@@ -1,6 +1,5 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.profile
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -11,8 +10,6 @@ import com.diegoferreiracaetano.pokedex.ui.components.list.SectionTitle
 import com.diegoferreiracaetano.pokedex.ui.components.list.TextRow
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppBottomNavigation
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
-import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppTopBar
-import com.diegoferreiracaetano.pokedex.ui.components.navigation.tabList
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter
 import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.resources.stringResource
@@ -59,16 +56,11 @@ fun ProfileScreen(
     onEmailClick: () -> Unit = {},
     onPasswordClick: () -> Unit = {},
     onTabSelected: (String) -> Unit = {},
-    onBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
     AppContainer(
         modifier,
-        topBar = AppTopBar(
-            title = "Perfil",
-            onBack = onBack
-        ),
         bottomBar = AppBottomNavigation(
             selectedRoute = ScreenRouter.Profile.route,
             onTabSelected = onTabSelected
@@ -124,7 +116,7 @@ fun ProfileScreen(
                     TextRow(
                         Res.string.logout,
                         stringResource(Res.string.logged_in_as, name),
-                        modifier = modifier.clickable(onClick = onLogoutClick),
+                        onClick = onLogoutClick,
                     )
                 }
             }

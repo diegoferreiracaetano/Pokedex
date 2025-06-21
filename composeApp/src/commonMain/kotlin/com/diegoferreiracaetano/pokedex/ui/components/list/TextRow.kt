@@ -81,16 +81,16 @@ fun TextRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 8.dp)
+            .clickable(onClick = {
+                if (onClick != null) {
+                    onClick()
+                }
+            })
     ) {
 
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .clickable(onClick = {
-                    if (onClick != null) {
-                        onClick()
-                    }
-                })
                 .weight(1f),
         ) {
 

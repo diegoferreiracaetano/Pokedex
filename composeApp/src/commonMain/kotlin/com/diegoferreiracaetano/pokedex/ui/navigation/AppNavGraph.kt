@@ -2,14 +2,15 @@ package com.diegoferreiracaetano.pokedex.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.diegoferreiracaetano.pokedex.domain.session.SessionManager
 import com.diegoferreiracaetano.pokedex.domain.user.CreateAccountStepType
-import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppNavigationTab
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.EditName
@@ -24,6 +25,7 @@ import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Profile
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail.VALIDATE_ARG
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType
@@ -43,17 +45,25 @@ import com.diegoferreiracaetano.pokedex.ui.screens.password.ChangePasswordScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.profile.ProfileScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.regions.RegionsScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.user.ChangeUserNameScreen
-import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.diegoferreiracaetano.pokedex.util.getLogger
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 fun AppNavGraph(
+    sessionManager: SessionManager = koinInject(),
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
+
+    val isLoggedIn by sessionManager.isLoggedIn.collectAsStateWithLifecycle()
+    val startDestination = if (isLoggedIn) Home.route else Onboarding.route
+
     NavHost(
         navController = navController,
-        startDestination = Onboarding.route,
+        startDestination = startDestination,
         modifier = modifier
     ) {
         composable(Home.route) {
@@ -127,8 +137,7 @@ fun AppNavGraph(
         }
 
         composable(ValidateEmail.route) { backStackEntry ->
-            val type = backStackEntry.readEnumOrDefault(TYPE_ARG, ValidateEmailType.entries.first())
-
+            val type = backStackEntry.readEnumOrDefault(VALIDATE_ARG, ValidateEmailType.entries.first())
             ValidateEmailScreen(
                 type = type,
                 onSendCode = { contact->
@@ -152,7 +161,9 @@ fun AppNavGraph(
         composable(Profile.route) {
 
             ProfileScreen(
-                isLoggedIn = false,
+                isLoggedIn = isLoggedIn,
+                name = sessionManager.user()?.name.orEmpty(),
+                email = sessionManager.user()?.email.orEmpty(),
                 showSuccess = false,
                 onLoginClick = {
                     navController.navigate(PreLogin.routeWithType(LOGIN))
@@ -169,8 +180,10 @@ fun AppNavGraph(
                 onTabSelected = { route->
                     navController.navigate(route)
                 },
-                onBack = {
-                    navController.popBackStack()
+                onLogoutClick = {
+                    coroutineScope.launch{
+                        sessionManager.logout()
+                    }
                 },
                 modifier = modifier
             )
@@ -209,13 +222,5 @@ fun AppNavGraph(
                 modifier
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun AppNavGraphPreview() {
-    PokedexTheme {
-        AppNavGraph()
     }
 }
