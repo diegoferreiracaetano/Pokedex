@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">Pokédex</string>
-    "
+
     <string name="action_back">Voltar</string>
     <string name="action_continue">Continuar</string>
     <string name="action_enter">Entrar</string>
@@ -136,5 +136,30 @@
 
     <string name="account_info_title">Informações da conta</string>
     <string name="account_password_hidden">●●●●●●●●●●●●</string>
+
+    <string name="search_pokemon_placeholder">Procurar Pokémon...</string>
+
+    <string name="type_normal">Normal</string>
+    <string name="type_fire">Fogo</string>
+    <string name="type_water">Água</string>
+    <string name="type_electric">Elétrico</string>
+    <string name="type_grass">Grama</string>
+    <string name="type_ice">Gelo</string>
+    <string name="type_fighting">Lutador</string>
+    <string name="type_poison">Venenoso</string>
+    <string name="type_ground">Terra</string>
+    <string name="type_flying">Voador</string>
+    <string name="type_psychic">Psíquico</string>
+    <string name="type_bug">Inseto</string>
+    <string name="type_rock">Pedra</string>
+    <string name="type_ghost">Fantasma</string>
+    <string name="type_dragon">Dragão</string>
+    <string name="type_dark">Sombrio</string>
+    <string name="type_steel">Metálico</string>
+    <string name="type_fairy">Fada</string>
+
+    <string name="all_types">Todos os tipos</string>
+    <string name="all_order_crescent_name">A-Z</string>
+    <string name="all_order_decrescent_name">Z-A</string>
 
 </resources>

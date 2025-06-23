@@ -2,6 +2,7 @@ package com.diegoferreiracaetano.pokedex.di
 
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailViewModel
+import com.diegoferreiracaetano.pokedex.ui.screens.home.HomeViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.login.LoginViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.otp.SendCodeViewModel
 import com.diegoferreiracaetano.pokedex.ui.screens.password.ChangePasswordViewModel
@@ -22,4 +23,5 @@ val appModule = module {
     factory { SendCodeViewModel(get()) }
     factory { ChangeUserNameViewModel() }
     factory { ChangePasswordViewModel() }
+    factory { HomeViewModel(get()) }
 }

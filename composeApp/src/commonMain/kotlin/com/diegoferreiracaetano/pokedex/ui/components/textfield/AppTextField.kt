@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -49,11 +50,11 @@ fun AppTextField(
     supportingText: StringResource? = null,
     isError: Boolean = false,
     type: TextFieldType = TextFieldType.NONE,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    shape: Shape = RoundedCornerShape(8.dp),
     modifier: Modifier = Modifier
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
-
-    val shape = RoundedCornerShape(8.dp)
     val colorScheme = MaterialTheme.colorScheme
 
     val borderColor = if (isError) colorScheme.error else colorScheme.outline
@@ -91,6 +92,7 @@ fun AppTextField(
                     color = placeholderColor
                 )
             },
+            leadingIcon = leadingIcon,
             isError = isError,
             shape = shape,
             visualTransformation = visualTransformation,

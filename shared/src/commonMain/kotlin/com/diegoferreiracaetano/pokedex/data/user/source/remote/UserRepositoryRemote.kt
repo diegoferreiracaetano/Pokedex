@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class UserRepositoryRemote(
-    private val dataSource: TaskNetworkDataSource
+    private val dataSource: UserNetworkDataSource
 ): UserRepository {
 
     private var code: String? = null

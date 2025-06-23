@@ -47,6 +47,7 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

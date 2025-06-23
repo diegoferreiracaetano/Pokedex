@@ -16,6 +16,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,6 +55,11 @@ fun AppBottomNavigationBar(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         NavigationBar {
+
+            val customColors: NavigationBarItemColors = NavigationBarItemDefaults.colors(
+                indicatorColor = MaterialTheme.colorScheme.surfaceBright
+            )
+
             items.forEach { tab ->
                 val isSelected = tab.route == selectedRoute
                 NavigationBarItem(
@@ -74,7 +81,8 @@ fun AppBottomNavigationBar(
                             text = tab.label,
                             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
                         )
-                    }
+                    },
+                    colors = customColors
                 )
             }
         }

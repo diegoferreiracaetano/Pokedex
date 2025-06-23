@@ -75,6 +75,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
             implementation(libs.koin.compose)
+            implementation("io.github.qdsfdhvh:image-loader:1.10.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

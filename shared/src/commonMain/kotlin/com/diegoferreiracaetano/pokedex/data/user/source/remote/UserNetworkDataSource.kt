@@ -4,7 +4,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class TaskNetworkDataSource {
+class UserNetworkDataSource {
 
     private val accessMutex = Mutex()
     private var users = listOf(

@@ -1,12 +1,17 @@
 package com.diegoferreiracaetano.pokedex.ui.util
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.diegoferreiracaetano.pokedex.util.getLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -127,4 +132,8 @@ fun String.toAnnotatedStringWithStyledPlaceholder(
         }
         append(parts.getOrNull(1) ?: "")
     }
+}
+
+fun Color.contrastTextColor(): Color {
+    return if (this.luminance() > 0.5f) Color.Black else Color.White
 }
