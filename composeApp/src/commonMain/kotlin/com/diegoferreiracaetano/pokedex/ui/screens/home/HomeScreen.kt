@@ -2,7 +2,6 @@ package com.diegoferreiracaetano.pokedex.ui.screens.home
 
 import AppSelection
 import AppSelectionOption
-import AppSelectionSimple
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,9 +13,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.diegoferreiracaetano.pokedex.data.util.OrderType
+import com.diegoferreiracaetano.pokedex.data.util.OrderType.ASC
+import com.diegoferreiracaetano.pokedex.data.util.OrderType.DESC
 import com.diegoferreiracaetano.pokedex.domain.pokedex.Pokemon
 import com.diegoferreiracaetano.pokedex.domain.pokedex.PokemonType
 import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppBottomNavigation
@@ -34,6 +39,32 @@ import pokedex.composeapp.generated.resources.all_order_crescent_name
 import pokedex.composeapp.generated.resources.all_order_decrescent_name
 import pokedex.composeapp.generated.resources.all_types
 
+
+@Composable
+fun listOfTypes() = listOf(
+    AppSelectionOption(
+        stringResource(Res.string.all_types),
+        "",
+        MaterialTheme.colorScheme.onBackground
+    )
+) + pokemonList.map {
+    AppSelectionOption(it.label(), it.name,it.color)
+}
+
+@Composable
+fun listOrder() = listOf(
+    AppSelectionOption(
+        stringResource(Res.string.all_order_crescent_name),
+        ASC,
+        MaterialTheme.colorScheme.onBackground
+    ),
+    AppSelectionOption(
+        stringResource(Res.string.all_order_decrescent_name),
+        DESC,
+        MaterialTheme.colorScheme.onBackground
+    ),
+)
+
 @Composable
 fun HomeScreen(
     onTabSelected: (String) -> Unit,
@@ -43,12 +74,11 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    viewModel.list("")
-
     PokemonListScreen(
         list = uiState.success,
         onTabSelected,
-        modifier
+        onChangeType = { search, type, order -> viewModel.list(search, type, order) },
+        modifier,
     )
 }
 
@@ -56,7 +86,8 @@ fun HomeScreen(
 fun PokemonListScreen(
     list: List<Pokemon>?,
     onTabSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    onChangeType: (String, String, OrderType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     AppContainer(
         modifier = modifier,
@@ -67,9 +98,7 @@ fun PokemonListScreen(
         Column(
             modifier = modifier
         ) {
-            AppSearchBar()
-            Spacer(modifier = Modifier.height(12.dp))
-            FilterRow()
+            FilterRow(onChangeType = onChangeType)
             Spacer(modifier = Modifier.height(12.dp))
 
             if (list.isNullOrEmpty()) {
@@ -87,39 +116,42 @@ fun PokemonListScreen(
 }
 
 @Composable
-fun FilterRow() {
+fun FilterRow(
+    onChangeType: (String, String, OrderType) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var search by remember { mutableStateOf("") }
+    var selectedType by remember { mutableStateOf("") }
+    var selectedOrder by remember { mutableStateOf(ASC) }
 
-    val list = listOf(
-        AppSelectionOption(
-            stringResource(Res.string.all_types),
-            MaterialTheme.colorScheme.onBackground
-        )
-    ) + pokemonList.map {
-        AppSelectionOption(it.label(),it.color)
-    }
-
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    Column(
+        modifier = modifier
     ) {
+        AppSearchBar(onValueChange = {
+            search = it
+            onChangeType(search, selectedType, selectedOrder)
+        })
+        Spacer(modifier = Modifier.height(12.dp))
 
-        AppSelection(
-            modifier = Modifier.weight(1f),
-            list = list,
-            selected = { index, selected ->
-                println("Opção selecionada: $selected")
-            }
-        )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            AppSelection(
+                modifier = Modifier.weight(1f),
+                list = listOfTypes(),
+                selected = { _, selected ->
+                    selectedType = selected.value as String
+                    onChangeType(search, selectedType, selectedOrder)
+                }
+            )
 
-        AppSelectionSimple(
-            modifier = Modifier.weight(1f),
-            list =  listOf(
-                stringResource(Res.string.all_order_crescent_name),
-                stringResource(Res.string.all_order_decrescent_name)
-            ),
-            selected = { index,  selected ->
-                println("Opção selecionada: $selected")
-            }
-        )
+            AppSelection(
+                modifier = Modifier.weight(1f),
+                list = listOrder(),
+                selected = { _, selected ->
+                    selectedOrder = selected.value as OrderType
+                    onChangeType(search, selectedType, selectedOrder)
+                }
+            )
+        }
     }
 }
 
@@ -127,9 +159,8 @@ fun FilterRow() {
 @Preview
 @Composable
 fun HomeScreenPreview() {
-
     val list = listOf(
         Pokemon("001", "Pikachu", listOf(PokemonType.ELECTRIC), "", false)
     )
-    PokemonListScreen(list, onTabSelected = {})
+    PokemonListScreen(list, onTabSelected = {}, onChangeType = {_, _, _ ->})
 }

@@ -33,6 +33,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 data class AppSelectionOption(
     val label: String,
+    val value: Any,
     val color: Color,
 )
 
@@ -46,7 +47,7 @@ fun AppSelectionSimple(
 
     AppSelection(
         modifier = modifier,
-        list = list.map { AppSelectionOption(it, color) },
+        list = list.map { AppSelectionOption(it, it, color) },
         selected = selected
     )
 }
@@ -158,7 +159,7 @@ fun AppSelectionDropdownPreview() {
 
             AppSelection(
                 list = pokemonList.map {
-                    AppSelectionOption(it.label(),pokemonList.first().color)
+                    AppSelectionOption(it.label(), it.name, it.color)
                 },
                 selected = { index, selected ->
                     println("Opção selecionada: $selected")
