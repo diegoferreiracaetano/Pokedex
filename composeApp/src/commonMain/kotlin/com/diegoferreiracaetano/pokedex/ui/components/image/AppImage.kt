@@ -10,13 +10,14 @@ import com.seiko.imageloader.rememberImagePainter
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import pokedex.composeapp.generated.resources.Res
+import pokedex.composeapp.generated.resources.bulbasaur1
 import pokedex.composeapp.generated.resources.placeholder
 
 @Composable
 fun AppImage(
     imageURL: String,
     contentDescription: String? = null,
-    placeholder: DrawableResource = Res.drawable.placeholder,
+    placeholder: DrawableResource = Res.drawable.bulbasaur1,
     modifier: Modifier = Modifier
 ) {
     val isPreview = LocalInspectionMode.current

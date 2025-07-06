@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ import pokedex.composeapp.generated.resources.onboarding_subtitle
 import pokedex.composeapp.generated.resources.onboarding_title
 import pokedex.composeapp.generated.resources.skip
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingFinishScreen(
     onCreateAccount: () -> Unit,

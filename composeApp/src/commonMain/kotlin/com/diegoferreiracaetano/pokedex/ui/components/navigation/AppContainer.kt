@@ -1,23 +1,8 @@
 package com.diegoferreiracaetano.pokedex.ui.components.navigation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -35,7 +20,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.login_screen_title
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppScaffoldContent(
@@ -43,23 +27,21 @@ private fun AppScaffoldContent(
     topBar: AppTopBar? = null,
     bottomBar: AppBottomNavigation? = null,
     snackBarHostState: SnackbarHostState,
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
+    scrollBehavior: TopAppBarScrollBehavior,
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { AppSnackbarHost(hostState = snackBarHostState) },
         topBar = {
             topBar?.let {
-                AppTopBar(
-                    title = it.title,
-                    onBack = it.onBack,
+                AppTopBarFactory(
+                    config = it,
                     scrollBehavior = scrollBehavior
                 )
             }
         },
-        bottomBar =  {
+        bottomBar = {
             bottomBar?.let {
                 AppBottomNavigationBar(
                     items = it.items,
@@ -72,7 +54,7 @@ private fun AppScaffoldContent(
         val baseModifier = modifier
             .widthIn(min = 150.dp, max = 600.dp)
             .fillMaxSize()
-            .background(colorScheme.surface)
+         //   .background(MaterialTheme.colorScheme.surface)
             .padding(innerPadding)
             .consumeWindowInsets(innerPadding)
             .systemBarsPadding()
@@ -80,7 +62,7 @@ private fun AppScaffoldContent(
 
         Box(
             modifier = Modifier
-                .background(colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surface)
                 .fillMaxSize(),
             contentAlignment = Alignment.TopCenter
         ) {
@@ -89,7 +71,6 @@ private fun AppScaffoldContent(
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppContainer(
@@ -97,6 +78,7 @@ fun AppContainer(
     topBar: AppTopBar? = null,
     bottomBar: AppBottomNavigation? = null,
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     content: @Composable (Modifier) -> Unit
 ) {
     AppScaffoldContent(
@@ -104,6 +86,7 @@ fun AppContainer(
         topBar = topBar,
         bottomBar = bottomBar,
         snackBarHostState = snackBarHostState,
+        scrollBehavior = scrollBehavior,
         content = content
     )
 }
@@ -115,11 +98,11 @@ fun <T> AppContainer(
     modifier: Modifier = Modifier,
     topBar: AppTopBar? = null,
     bottomBar: AppBottomNavigation? = null,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onLoading: @Composable () -> Unit = { AppLoading() },
     content: @Composable (modifier: Modifier, data: T) -> Unit
 ) {
-
     LaunchedEffect(uiState?.error) {
         uiState?.error?.let { snackBarHostState.showSnackbar(it) }
     }
@@ -128,7 +111,8 @@ fun <T> AppContainer(
         modifier = modifier,
         topBar = topBar,
         bottomBar = bottomBar,
-        snackBarHostState = snackBarHostState
+        snackBarHostState = snackBarHostState,
+        scrollBehavior = scrollBehavior
     ) { baseModifier ->
         when {
             uiState == null || uiState.isLoading -> onLoading()
@@ -137,26 +121,27 @@ fun <T> AppContainer(
     }
 }
 
-
 @Preview
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun AppTopBarPreview() {
-    PokedexTheme(true) {
+    PokedexTheme {
         AppContainer(
-            topBar = AppTopBar(title = "Create", {})
-        ) { padding->
-
+            topBar = AppTopBar(
+                title = "Create",
+                backgroundColor = MaterialTheme.colorScheme.background,
+                onBack = {}
+            )
+        ) { padding ->
             Column(
                 modifier = padding,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Text(
                     text = stringResource(Res.string.login_screen_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Normal
                 )
-
             }
         }
     }

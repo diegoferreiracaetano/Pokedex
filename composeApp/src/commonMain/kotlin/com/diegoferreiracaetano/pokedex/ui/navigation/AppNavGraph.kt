@@ -15,18 +15,23 @@ import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.CreateAccount.STEP_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.EditName
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.EditPassword
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Favorites
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Home
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Login
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Onboarding
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.OnboardingFinish
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PokemonDetail
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PokemonDetail.DETAIL_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.PreLogin.TYPE_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Profile
+import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.Regions
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.SendCode.CONTACT_ARG
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter.ValidateEmail.VALIDATE_ARG
 import com.diegoferreiracaetano.pokedex.ui.screens.account.CreateAccountScreen
+import com.diegoferreiracaetano.pokedex.ui.screens.detail.PokemonDetailScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType
 import com.diegoferreiracaetano.pokedex.ui.screens.email.ValidateEmailType.FORGOT
@@ -45,7 +50,6 @@ import com.diegoferreiracaetano.pokedex.ui.screens.password.ChangePasswordScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.profile.ProfileScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.regions.RegionsScreen
 import com.diegoferreiracaetano.pokedex.ui.screens.user.ChangeUserNameScreen
-import com.diegoferreiracaetano.pokedex.util.getLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -70,6 +74,9 @@ fun AppNavGraph(
             HomeScreen(
                 onTabSelected = { route->
                     navController.navigateToRoute(route)
+                },
+                onItemClick = {
+                    navController.navigate(PokemonDetail.routeWithId(it))
                 },
                 modifier = modifier
             )
@@ -205,7 +212,7 @@ fun AppNavGraph(
             )
         }
 
-        composable(ScreenRouter.Regions.route) {
+        composable(Regions.route) {
             RegionsScreen(
                 onTabSelected = { route->
                     navController.navigate(route)
@@ -214,12 +221,22 @@ fun AppNavGraph(
             )
         }
 
-        composable(ScreenRouter.Favorites.route) {
+        composable(Favorites.route) {
             FavoritesScreen(
                 onTabSelected = { route->
                     navController.navigate(route)
                 },
                 modifier
+            )
+        }
+
+        composable(PokemonDetail.route) { backStackEntry ->
+            val id = backStackEntry.readOrDefault(DETAIL_ARG, "")
+
+            PokemonDetailScreen(
+                id = id,
+                onBack = { navController.popBackStack() },
+                modifier = modifier
             )
         }
     }

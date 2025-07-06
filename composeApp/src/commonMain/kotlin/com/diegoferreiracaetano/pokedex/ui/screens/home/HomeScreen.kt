@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,6 +69,7 @@ fun listOrder() = listOf(
 @Composable
 fun HomeScreen(
     onTabSelected: (String) -> Unit,
+    onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinInject()
 ) {
@@ -77,15 +79,18 @@ fun HomeScreen(
     PokemonListScreen(
         list = uiState.success,
         onTabSelected,
+        onItemClick = onItemClick,
         onChangeType = { search, type, order -> viewModel.list(search, type, order) },
         modifier,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonListScreen(
     list: List<Pokemon>?,
     onTabSelected: (String) -> Unit,
+    onItemClick: (String) -> Unit,
     onChangeType: (String, String, OrderType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -106,7 +111,7 @@ fun PokemonListScreen(
             } else {
                 LazyColumn {
                     items(list) { pokemon ->
-                        PokemonCard(pokemon = pokemon)
+                        PokemonCard(pokemon = pokemon, onItemClick)
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
@@ -162,5 +167,5 @@ fun HomeScreenPreview() {
     val list = listOf(
         Pokemon("001", "Pikachu", listOf(PokemonType.ELECTRIC), "", false)
     )
-    PokemonListScreen(list, onTabSelected = {}, onChangeType = {_, _, _ ->})
+    PokemonListScreen(list, onTabSelected = {}, onItemClick = {}, onChangeType = {_, _, _ ->})
 }

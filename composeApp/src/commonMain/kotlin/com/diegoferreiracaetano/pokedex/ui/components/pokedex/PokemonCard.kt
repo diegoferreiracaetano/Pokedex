@@ -1,6 +1,7 @@
 package com.diegoferreiracaetano.pokedex.ui.components.pokedex
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,8 +36,12 @@ import com.diegoferreiracaetano.pokedex.ui.theme.PokedexTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun PokemonCard(pokemon: Pokemon) {
-    Box {
+fun PokemonCard(
+    pokemon: Pokemon,
+    onItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier.clickable(onClick = { onItemClick(pokemon.name) })) {
         Row(
             modifier = Modifier
                 .height(IntrinsicSize.Min)
@@ -174,7 +179,7 @@ fun PokemonCardPreview() {
     )
 
     PokedexTheme {
-        PokemonCard(pokemon)
+        PokemonCard(pokemon, onItemClick = {})
     }
 }
 

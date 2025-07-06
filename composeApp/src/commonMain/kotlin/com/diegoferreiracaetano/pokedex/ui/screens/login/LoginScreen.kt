@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.SnackbarHostState
@@ -75,6 +76,7 @@ fun LoginScreen(
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 private fun LoginScreenContent(
     isLoading: Boolean,
     isLogger: Boolean,

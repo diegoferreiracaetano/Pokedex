@@ -47,4 +47,12 @@ sealed class ScreenRouter(val route: String) {
             return "send_code/${contact}"
         }
     }
+
+    object PokemonDetail : ScreenRouter("pokemon_detail/{id}") {
+        const val DETAIL_ARG = "id"
+
+        fun routeWithId(id: String): String {
+            return "pokemon_detail/${id}"
+        }
+    }
 }

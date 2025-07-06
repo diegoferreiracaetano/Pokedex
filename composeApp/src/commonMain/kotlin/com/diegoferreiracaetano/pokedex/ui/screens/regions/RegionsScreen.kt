@@ -1,5 +1,6 @@
 package com.diegoferreiracaetano.pokedex.ui.screens.regions
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import com.diegoferreiracaetano.pokedex.ui.components.navigation.AppContainer
 import com.diegoferreiracaetano.pokedex.ui.navigation.ScreenRouter
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegionsScreen(
     onTabSelected: (String) -> Unit,
